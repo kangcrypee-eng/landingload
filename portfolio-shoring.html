@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쇼링장 ERP 포트폴리오 | Landing Load</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Barlow+Condensed:wght@600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0b1f3a;
+  --blue: #1a5fd4;
+  --steel: #2a3a5c;
+  --accent: #F5A623;
+  --mint: #00C9A7;
+  --light: #F4F7FF;
+  --border: #e4e8f0;
+  --muted: #6b7a99;
+  --white: #fff;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Noto Sans KR',sans-serif; background:#fff; color:var(--navy); }
+a { text-decoration:none; color:inherit; }
+
+/* ── SHARED NAV (same as main) ── */
+.site-nav {
+  background:var(--navy); height:52px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px;
+}
+.nav-back {
+  display:flex; align-items:center; gap:8px;
+  color:rgba(255,255,255,0.6); font-size:13px; transition:color .15s;
+}
+.nav-back:hover { color:#fff; }
+.nav-brand { font-family:'Montserrat',sans-serif; font-weight:800; font-size:16px; color:#fff; }
+.nav-phone { font-family:'Montserrat',sans-serif; font-weight:700; font-size:15px; color:var(--accent); }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0b1f3a 0%, #1a3a6b 60%, #0d3460 100%);
+  padding: 72px 80px 64px;
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 40px,
+    rgba(255,255,255,0.015) 40px,
+    rgba(255,255,255,0.015) 80px
+  );
+}
+.hero-inner { position:relative; z-index:2; max-width:1200px; margin:0 auto; }
+.hero-breadcrumb {
+  display:flex; align-items:center; gap:6px;
+  font-size:12px; color:rgba(255,255,255,0.4); margin-bottom:24px;
+}
+.hero-breadcrumb span { color:rgba(255,255,255,0.6); }
+.hero-breadcrumb .sep { color:rgba(255,255,255,0.2); }
+
+.hero-layout { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+
+.hero-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(0,201,167,0.12); border:1px solid rgba(0,201,167,0.3);
+  color:var(--mint); font-size:11px; font-weight:700; letter-spacing:1.5px;
+  padding:5px 14px; border-radius:2px; margin-bottom:20px;
+  text-transform:uppercase;
+}
+.hero-tag-dot { width:6px; height:6px; background:var(--mint); border-radius:50%; animation:pulse 2s infinite; }
+
+.hero-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:56px; font-weight:800; color:#fff;
+  line-height:1.05; margin-bottom:16px; letter-spacing:-0.5px;
+}
+.hero-title .hl { color:var(--accent); }
+.hero-subtitle {
+  font-size:15px; color:rgba(255,255,255,0.55);
+  line-height:1.75; margin-bottom:32px; max-width:440px;
+}
+.hero-chips { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px; }
+.chip {
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.14);
+  color:rgba(255,255,255,0.75); font-size:12px; font-weight:500;
+  padding:6px 14px; border-radius:2px;
+}
+.hero-ctas { display:flex; gap:10px; }
+.btn-main {
+  background:var(--blue); color:#fff; font-weight:700; font-size:14px;
+  padding:13px 26px; border-radius:3px; border:none; cursor:pointer;
+  display:inline-flex; align-items:center; gap:8px; transition:all .2s;
+}
+.btn-main:hover { background:#1450bb; transform:translateY(-1px); }
+.btn-outline {
+  background:transparent; color:rgba(255,255,255,0.8); font-weight:600; font-size:14px;
+  padding:13px 26px; border-radius:3px; border:1.5px solid rgba(255,255,255,0.2);
+  cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s;
+}
+.btn-outline:hover { border-color:rgba(255,255,255,0.5); color:#fff; }
+
+/* ERP Preview Card (right side of hero) */
+.erp-preview {
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px; overflow:hidden;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+.erp-preview-bar {
+  background:rgba(255,255,255,0.06);
+  padding:10px 16px; display:flex; align-items:center; gap:8px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.erp-bar-dot { width:10px; height:10px; border-radius:50%; }
+.erp-preview-sidebar {
+  display:grid; grid-template-columns:200px 1fr;
+  min-height:320px;
+}
+.erp-sidebar {
+  background:rgba(10,20,40,0.6); border-right:1px solid rgba(255,255,255,0.07);
+  padding:12px 0;
+}
+.erp-sidebar-group { margin-bottom:4px; }
+.erp-sidebar-head {
+  padding:8px 14px; font-size:11px; color:rgba(255,255,255,0.35);
+  font-weight:700; letter-spacing:0.5px; text-transform:uppercase;
+  display:flex; align-items:center; gap:7px;
+}
+.erp-sidebar-item {
+  padding:7px 14px 7px 28px; font-size:12px;
+  color:rgba(255,255,255,0.55); cursor:pointer; transition:all .15s;
+  display:flex; align-items:center; gap:6px;
+}
+.erp-sidebar-item:hover, .erp-sidebar-item.on {
+  background:rgba(26,95,212,0.25); color:#fff;
+}
+.erp-sidebar-item.on { border-left:3px solid var(--blue); padding-left:25px; }
+.erp-main-area { padding:16px; }
+.erp-main-title { font-size:13px; font-weight:700; color:#fff; margin-bottom:12px; }
+.erp-stat-row { display:flex; gap:8px; margin-bottom:14px; }
+.erp-stat {
+  flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+  border-radius:6px; padding:10px 12px;
+}
+.erp-stat-num { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; color:#fff; }
+.erp-stat-label { font-size:10px; color:rgba(255,255,255,0.4); margin-top:2px; }
+.erp-table-head {
+  display:grid; grid-template-columns:80px 1fr 90px 70px 60px;
+  gap:8px; padding:6px 8px; background:rgba(255,255,255,0.05);
+  border-radius:4px; margin-bottom:6px;
+}
+.erp-table-head span { font-size:10px; color:rgba(255,255,255,0.35); font-weight:700; }
+.erp-table-row {
+  display:grid; grid-template-columns:80px 1fr 90px 70px 60px;
+  gap:8px; padding:7px 8px; border-bottom:1px solid rgba(255,255,255,0.05);
+  align-items:center;
+}
+.erp-table-row span { font-size:11px; color:rgba(255,255,255,0.65); }
+.erp-badge {
+  font-size:10px; font-weight:700; padding:2px 7px; border-radius:2px;
+  display:inline-block;
+}
+.badge-new { background:rgba(26,95,212,0.25); color:#7db3ff; }
+.badge-done { background:rgba(0,201,167,0.2); color:var(--mint); }
+.badge-proc { background:rgba(245,166,35,0.2); color:var(--accent); }
+
+/* ── SECTION COMMON ── */
+.container { max-width:1200px; margin:0 auto; }
+.sec { padding:72px 80px; }
+.sec-sm { padding:56px 80px; }
+.sec-tag {
+  font-size:11px; font-weight:700; letter-spacing:2px; color:var(--blue);
+  text-transform:uppercase; margin-bottom:10px;
+}
+.sec-title { font-size:32px; font-weight:800; line-height:1.2; margin-bottom:12px; }
+.sec-desc { font-size:14px; color:var(--muted); line-height:1.75; }
+
+/* ── FEATURE MODULES ── */
+.modules-section { background:var(--light); }
+.modules-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:40px;
+}
+.mod-card {
+  background:#fff; border:1px solid var(--border); border-radius:10px;
+  padding:28px 24px; transition:all .25s; cursor:pointer; position:relative; overflow:hidden;
+}
+.mod-card::after {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:4px;
+  background:var(--blue); transform:scaleY(0); transform-origin:bottom;
+  transition:transform .25s;
+}
+.mod-card:hover { box-shadow:0 8px 32px rgba(26,95,212,0.1); transform:translateY(-3px); }
+.mod-card:hover::after { transform:scaleY(1); }
+.mod-icon {
+  width:48px; height:48px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; margin-bottom:16px;
+}
+.mod-title { font-size:15px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+.mod-desc { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:14px; }
+.mod-features { list-style:none; }
+.mod-features li {
+  font-size:12px; color:#444; padding:4px 0;
+  display:flex; align-items:center; gap:6px;
+  border-bottom:1px solid #f5f6f8;
+}
+.mod-features li:last-child { border-bottom:none; }
+.mod-features li::before { content:'·'; color:var(--blue); font-weight:700; font-size:16px; flex-shrink:0; }
+
+/* ── ERP FLOW (SCREENS) ── */
+.screens-section { background:#fff; }
+.screens-tabs { display:flex; gap:4px; margin-bottom:32px; border-bottom:2px solid var(--border); }
+.stab {
+  padding:10px 22px; font-size:13px; font-weight:600; color:var(--muted);
+  cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px;
+  transition:all .2s;
+}
+.stab:hover { color:var(--navy); }
+.stab.on { color:var(--blue); border-bottom-color:var(--blue); }
+
+.screen-panel { display:none; }
+.screen-panel.on { display:grid; grid-template-columns:280px 1fr; gap:0; border:1px solid var(--border); border-radius:10px; overflow:hidden; min-height:480px; }
+
+/* Mock Odoo sidebar */
+.mock-sidebar {
+  background:#1e2a3e; padding:16px 0;
+}
+.mock-sidebar-top {
+  padding:10px 16px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:8px;
+}
+.mock-brand {
+  font-size:13px; font-weight:700; color:#fff;
+  display:flex; align-items:center; gap:6px;
+}
+.mock-brand-sub { font-size:10px; color:rgba(255,255,255,0.35); margin-top:2px; }
+.mock-nav-head {
+  padding:10px 16px 5px;
+  font-size:10px; font-weight:700; letter-spacing:0.5px;
+  color:rgba(255,255,255,0.3); text-transform:uppercase;
+  display:flex; align-items:center; gap:7px;
+}
+.mock-nav-item {
+  padding:8px 16px 8px 28px; font-size:12.5px; color:rgba(255,255,255,0.55);
+  cursor:pointer; transition:all .15s; display:flex; align-items:center; gap:6px;
+}
+.mock-nav-item:hover, .mock-nav-item.on { background:rgba(26,95,212,0.2); color:#fff; }
+.mock-nav-item.on { border-left:3px solid var(--blue); padding-left:25px; }
+
+/* Mock content area */
+.mock-content { background:#f4f6fb; padding:24px; }
+.mock-topbar {
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;
+}
+.mock-page-title { font-size:18px; font-weight:700; color:var(--navy); display:flex; align-items:center; gap:8px; }
+.mock-btn {
+  background:var(--blue); color:#fff; font-size:12px; font-weight:700;
+  padding:7px 16px; border-radius:4px; border:none; cursor:pointer;
+  display:flex; align-items:center; gap:6px;
+}
+.mock-searchbar {
+  display:flex; gap:8px; margin-bottom:16px; align-items:center;
+}
+.mock-input {
+  flex:1; border:1px solid #dde2ec; border-radius:4px; background:#fff;
+  padding:8px 12px; font-size:12px; color:#666; display:flex; align-items:center; gap:6px;
+}
+.mock-select {
+  border:1px solid #dde2ec; border-radius:4px; background:#fff;
+  padding:8px 12px; font-size:12px; color:#666; display:flex; align-items:center; gap:6px;
+  white-space:nowrap;
+}
+.mock-status-bar { display:flex; gap:6px; margin-bottom:16px; flex-wrap:wrap; }
+.mstatus {
+  padding:6px 14px; border-radius:100px; font-size:12px; font-weight:600;
+  border:1.5px solid #dde2ec; color:#666; cursor:pointer;
+}
+.mstatus.on { background:var(--blue); color:#fff; border-color:var(--blue); }
+.mock-table { background:#fff; border-radius:6px; border:1px solid #e8eaf0; overflow:hidden; }
+.mock-thead {
+  display:grid; padding:10px 16px; background:#f8f9fc;
+  border-bottom:1px solid #e8eaf0; font-size:11px; font-weight:700; color:#888;
+}
+.mock-trow {
+  display:grid; padding:11px 16px;
+  border-bottom:1px solid #f0f2f7; font-size:12px; color:#444;
+  align-items:center; cursor:pointer; transition:background .15s;
+}
+.mock-trow:hover { background:#f8faff; }
+.mock-trow:last-child { border-bottom:none; }
+.tag {
+  display:inline-block; padding:2px 8px; border-radius:2px;
+  font-size:11px; font-weight:700;
+}
+.tag-roro { background:#EFF6FF; color:var(--blue); }
+.tag-new { background:#FFF7ED; color:#d97706; border:1px solid #fde68a; }
+.tag-done { background:#ECFDF5; color:#059669; }
+.tag-proc { background:#FEF9C3; color:#92400e; }
+.tag-customs { background:#EFF6FF; color:var(--blue); }
+
+/* stat cards */
+.mock-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; }
+.mstat {
+  background:#fff; border:1px solid #e8eaf0; border-radius:6px; padding:14px 16px;
+  display:flex; align-items:center; gap:12px;
+}
+.mstat-icon {
+  width:38px; height:38px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;
+}
+.mstat-num { font-size:20px; font-weight:800; color:var(--navy); line-height:1; }
+.mstat-label { font-size:11px; color:#999; margin-top:2px; }
+
+/* monthly grid */
+.monthly-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.month-card {
+  background:#fff; border-radius:6px; border:1px solid #e8eaf0; overflow:hidden;
+}
+.month-head {
+  background:#2a3a5c; color:#fff; padding:8px 14px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.month-name { font-size:13px; font-weight:700; }
+.month-stat { font-size:11px; color:rgba(255,255,255,0.5); }
+.month-body { padding:12px 14px; min-height:56px; display:flex; align-items:center; justify-content:center; }
+.month-empty { font-size:12px; color:#ccc; }
+.month-data { font-size:12px; color:#444; line-height:1.6; }
+
+/* ── BENEFIT SECTION ── */
+.benefit-section {
+  background:linear-gradient(135deg,#0b1f3a 0%,#1a3a6b 100%);
+  padding:72px 80px;
+}
+.benefit-section .sec-tag { color:var(--accent); }
+.benefit-section .sec-title { color:#fff; }
+.benefit-section .sec-desc { color:rgba(255,255,255,0.5); }
+.benefit-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:40px; }
+.benefit-card {
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px; padding:28px 22px; text-align:center; transition:all .2s;
+}
+.benefit-card:hover { background:rgba(255,255,255,0.08); transform:translateY(-3px); }
+.benefit-num {
+  font-family:'Barlow Condensed',sans-serif; font-weight:800;
+  font-size:44px; color:var(--accent); line-height:1; margin-bottom:8px;
+}
+.benefit-num span { font-size:22px; }
+.benefit-label { font-size:13px; font-weight:700; color:#fff; margin-bottom:6px; }
+.benefit-desc { font-size:12px; color:rgba(255,255,255,0.45); line-height:1.6; }
+
+/* ── APPLY SECTION ── */
+.apply-section { background:var(--light); padding:72px 80px; }
+.apply-layout { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; margin-top:40px; }
+.apply-info h3 { font-size:20px; font-weight:700; margin-bottom:16px; }
+.apply-info p { font-size:14px; color:var(--muted); line-height:1.75; margin-bottom:24px; }
+.apply-contact { display:flex; flex-direction:column; gap:12px; }
+.contact-item {
+  display:flex; align-items:center; gap:12px;
+  background:#fff; border:1px solid var(--border); border-radius:8px; padding:14px 18px;
+}
+.contact-icon { font-size:20px; flex-shrink:0; }
+.contact-label { font-size:11px; color:var(--muted); }
+.contact-val { font-size:14px; font-weight:700; color:var(--navy); }
+
+.apply-form { background:#fff; border:1px solid var(--border); border-radius:10px; padding:32px; }
+.apply-form h3 { font-size:17px; font-weight:700; margin-bottom:24px; color:var(--navy); }
+.form-row { margin-bottom:16px; }
+.form-label { font-size:12px; font-weight:600; color:#444; margin-bottom:6px; display:block; }
+.form-label .req { color:#e53e3e; margin-left:2px; }
+.form-input {
+  width:100%; border:1.5px solid #e4e8f0; border-radius:4px;
+  padding:10px 14px; font-size:13px; color:#333;
+  font-family:'Noto Sans KR',sans-serif; outline:none; transition:border .15s;
+}
+.form-input:focus { border-color:var(--blue); }
+.form-input::placeholder { color:#bbb; }
+.form-radio-group { display:flex; flex-wrap:wrap; gap:8px; }
+.form-radio {
+  display:flex; align-items:center; gap:5px;
+  font-size:12.5px; color:#555; cursor:pointer;
+}
+.form-radio input { accent-color:var(--blue); }
+.form-submit {
+  width:100%; background:var(--navy); color:#fff;
+  font-weight:700; font-size:14px; padding:13px;
+  border-radius:4px; border:none; cursor:pointer;
+  font-family:'Noto Sans KR',sans-serif; transition:background .15s; margin-top:8px;
+}
+.form-submit:hover { background:#1a3a6b; }
+.form-agree { display:flex; align-items:center; gap:8px; font-size:12px; color:#888; margin-bottom:12px; }
+.form-agree input { accent-color:var(--blue); }
+
+/* ── FOOTER ── */
+.site-footer {
+  background:#08131f; padding:28px 80px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.footer-brand { font-family:'Montserrat',sans-serif; font-weight:800; font-size:15px; color:#fff; }
+.footer-phone { font-family:'Montserrat',sans-serif; font-weight:700; font-size:16px; color:#4fc3f7; }
+.footer-copy { font-size:11px; color:rgba(255,255,255,0.25); }
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="main-landing.html" class="nav-back">← 메인으로</a>
+  <span class="nav-brand">Landing Load</span>
+  <span class="nav-phone">1668-1653</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-breadcrumb">
+      <a href="main-landing.html">홈</a>
+      <span class="sep">›</span>
+      <span>포트폴리오</span>
+      <span class="sep">›</span>
+      <span style="color:rgba(255,255,255,0.75)">쇼링장 ERP</span>
+    </div>
+    <div class="hero-layout">
+      <div>
+        <div class="hero-tag"><div class="hero-tag-dot"></div>ERP · 중고차 수출</div>
+        <h1 class="hero-title">
+          쇼링장 업무를<br>
+          하나로 <span class="hl">통합 관리</span>
+        </h1>
+        <p class="hero-subtitle">
+          작업의뢰부터 청구서 발급까지 — 쇼링장 특화 Odoo ERP로
+          거래처·작업·비품·경비·HR 전 업무를 효율적으로 처리하세요.
+        </p>
+        <div class="hero-chips">
+          <span class="chip">🚢 작업의뢰 관리</span>
+          <span class="chip">📋 쇼링리스트 자동발급</span>
+          <span class="chip">💰 청구서 관리</span>
+          <span class="chip">📦 비품·경비 관리</span>
+          <span class="chip">👥 HR 관리</span>
+        </div>
+        <div class="hero-ctas">
+          <a href="#apply" class="btn-main">무료 상담 신청하기</a>
+          <a href="#modules" class="btn-outline">기능 살펴보기 ↓</a>
+        </div>
+      </div>
+
+      <!-- ERP Preview -->
+      <div class="erp-preview">
+        <div class="erp-preview-bar">
+          <div class="erp-bar-dot" style="background:#ff5f57"></div>
+          <div class="erp-bar-dot" style="background:#ffbd2e"></div>
+          <div class="erp-bar-dot" style="background:#28c840"></div>
+          <span style="font-size:11px;color:rgba(255,255,255,0.3);margin-left:8px">쇼링장 ERP · 작업의뢰 현황</span>
+        </div>
+        <div class="erp-preview-sidebar">
+          <div class="erp-sidebar">
+            <div class="erp-sidebar-group">
+              <div class="erp-sidebar-head">📋 거래처 관리</div>
+              <div class="erp-sidebar-item">거래처 조회</div>
+              <div class="erp-sidebar-item">협력사 관리</div>
+            </div>
+            <div class="erp-sidebar-group">
+              <div class="erp-sidebar-head">🚢 작업의뢰</div>
+              <div class="erp-sidebar-item on">작업 조회</div>
+              <div class="erp-sidebar-item">작업 현황</div>
+              <div class="erp-sidebar-item">쇼링리스트</div>
+            </div>
+            <div class="erp-sidebar-group">
+              <div class="erp-sidebar-head">💰 청구서</div>
+              <div class="erp-sidebar-item">청구서 관리</div>
+            </div>
+            <div class="erp-sidebar-group">
+              <div class="erp-sidebar-head">📦 비품·경비</div>
+              <div class="erp-sidebar-item">비품 관리</div>
+              <div class="erp-sidebar-item">경비 관리</div>
+            </div>
+          </div>
+          <div class="erp-main-area">
+            <div class="erp-main-title">작업 현황 조회</div>
+            <div class="erp-stat-row">
+              <div class="erp-stat">
+                <div class="erp-stat-num" style="color:#7db3ff">12</div>
+                <div class="erp-stat-label">이번 주 작업</div>
+              </div>
+              <div class="erp-stat">
+                <div class="erp-stat-num" style="color:var(--mint)">8</div>
+                <div class="erp-stat-label">완료</div>
+              </div>
+              <div class="erp-stat">
+                <div class="erp-stat-num" style="color:var(--accent)">4</div>
+                <div class="erp-stat-label">진행중</div>
+              </div>
+            </div>
+            <div class="erp-table-head" style="grid-template-columns:70px 1fr 80px 60px">
+              <span>접수일</span><span>화주명·차량</span><span>컨테이너</span><span>상태</span>
+            </div>
+            <div class="erp-table-row" style="grid-template-columns:70px 1fr 80px 60px">
+              <span>02-24</span><span>HANEX<br><span style="font-size:10px;color:rgba(255,255,255,0.35)">KNAG241ABPA</span></span><span style="font-size:10px">40ft</span><span><span class="erp-badge badge-new">진행중</span></span>
+            </div>
+            <div class="erp-table-row" style="grid-template-columns:70px 1fr 80px 60px">
+              <span>02-24</span><span>NUR AUTO<br><span style="font-size:10px;color:rgba(255,255,255,0.35)">KNAG241ABRA</span></span><span style="font-size:10px">20ft</span><span><span class="erp-badge badge-proc">세관제출</span></span>
+            </div>
+            <div class="erp-table-row" style="grid-template-columns:70px 1fr 80px 60px">
+              <span>02-23</span><span>ZAMA AUTO<br><span style="font-size:10px;color:rgba(255,255,255,0.35)">W1NFD2DB1NA</span></span><span style="font-size:10px">40ft</span><span><span class="erp-badge badge-done">완료</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="sec modules-section" id="modules">
+  <div class="container">
+    <div class="sec-tag">ERP MODULES</div>
+    <h2 class="sec-title">쇼링장 특화 6대 기능 모듈</h2>
+    <p class="sec-desc">엑셀·메모장으로 관리하던 업무를 하나의 시스템으로 통합합니다.</p>
+    <div class="modules-grid">
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#EFF6FF">🏢</div>
+        <div class="mod-title">거래처 관리</div>
+        <div class="mod-desc">쇼링을 의뢰하는 업체·개인 거래처를 체계적으로 등록하고 관리합니다.</div>
+        <ul class="mod-features">
+          <li>대표자·직원·비상연락처 (위챗·텔레그램)</li>
+          <li>주요 포워딩 업체 연결</li>
+          <li>사업자등록증 파일 관리</li>
+          <li>세금계산서 발급용 이메일 관리</li>
+          <li>협력사(운송사·포워딩) 별도 관리</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#FFF7ED">🚢</div>
+        <div class="mod-title">작업의뢰 관리</div>
+        <div class="mod-desc">매일 들어오는 쇼링 오더를 등록하고 작업 진행 상황을 실시간으로 추적합니다.</div>
+        <ul class="mod-features">
+          <li>화주명·연락처·최종도착지</li>
+          <li>포워딩·운송사·운전기사·차량번호</li>
+          <li>차대번호·컨테이너 구분(20/40/45ft)</li>
+          <li>반입지·특이사항 기록</li>
+          <li>쇼링리스트 자동 발급</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#F0FDF4">🔍</div>
+        <div class="mod-title">작업 조회</div>
+        <div class="mod-desc">차대번호·컨테이너 번호로 빠르게 작업 이력을 조회합니다.</div>
+        <ul class="mod-features">
+          <li>차대번호 검색 조회</li>
+          <li>컨테이너 번호 조회</li>
+          <li>셀번호 기록</li>
+          <li>쇼링 사진 첨부·조회</li>
+          <li>바이어 제공 정보 자동 추출</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#FDF4FF">💰</div>
+        <div class="mod-title">청구서 관리</div>
+        <div class="mod-desc">개인·법인 거래처별로 청구서를 발급하고 입금 확인 후 세금계산서를 처리합니다.</div>
+        <ul class="mod-features">
+          <li>개인·업체 분리 청구서 발급</li>
+          <li>입금 확인 연동</li>
+          <li>세금계산서 발급·미발급 관리</li>
+          <li>청구 현황 월별 집계</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#FFFBEB">📦</div>
+        <div class="mod-title">비품·경비 관리</div>
+        <div class="mod-desc">쇼링 작업에 사용하는 소모품과 운영 경비를 체계적으로 관리합니다.</div>
+        <ul class="mod-features">
+          <li>와이어·목재·아시바 재고 관리</li>
+          <li>지게차 주유비 기록</li>
+          <li>기타 차량 주유 관리</li>
+          <li>직원 식대 관리</li>
+          <li>월별 경비 집계·보고</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#FFF0F0">👥</div>
+        <div class="mod-title">HR 관리</div>
+        <div class="mod-desc">인원별 근무 일정과 출퇴근 현황을 관리합니다.</div>
+        <ul class="mod-features">
+          <li>인원별 근무일 기록</li>
+          <li>운전기사 개근증 발급·보관</li>
+          <li>작업 완료 후 사진정보 확보</li>
+          <li>월별 근태 집계</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ERP SCREENS -->
+<section class="sec screens-section" id="screens">
+  <div class="container">
+    <div class="sec-tag">ACTUAL SCREENS</div>
+    <h2 class="sec-title">실제 ERP 화면 미리보기</h2>
+    <p class="sec-desc">구축 완료된 관세사 ERP 기반으로, 쇼링장 업무에 맞게 커스터마이징한 화면입니다.</p>
+
+    <div style="margin-top:32px">
+      <div class="screens-tabs">
+        <div class="stab on" onclick="switchTab('tab-work', this)">작업의뢰 조회</div>
+        <div class="stab" onclick="switchTab('tab-client', this)">거래처 관리</div>
+        <div class="stab" onclick="switchTab('tab-monthly', this)">월별 현황</div>
+      </div>
+
+      <!-- 작업의뢰 조회 -->
+      <div class="screen-panel on" id="tab-work">
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-top">
+            <div class="mock-brand">🚢 쇼링장 ERP</div>
+            <div class="mock-brand-sub">× Odoo</div>
+          </div>
+          <div class="mock-nav-head">📋 거래처 관리</div>
+          <div class="mock-nav-item">거래처 조회</div>
+          <div class="mock-nav-item">협력사 관리</div>
+          <div class="mock-nav-head">🚢 작업의뢰</div>
+          <div class="mock-nav-item on">작업 조회</div>
+          <div class="mock-nav-item">작업 현황</div>
+          <div class="mock-nav-item">쇼링리스트</div>
+          <div class="mock-nav-head">💰 청구서</div>
+          <div class="mock-nav-item">청구서 관리</div>
+          <div class="mock-nav-head">📦 비품·경비</div>
+          <div class="mock-nav-item">비품 관리</div>
+          <div class="mock-nav-item">경비 관리</div>
+          <div class="mock-nav-head">👥 HR</div>
+          <div class="mock-nav-item">근태 관리</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-topbar">
+            <div class="mock-page-title">🚢 작업의뢰 조회</div>
+            <button class="mock-btn">+ 작업 입력</button>
+          </div>
+          <div class="mock-searchbar">
+            <div class="mock-input" style="flex:2">🔍 차대번호, 화주명, 컨테이너번호로 검색...</div>
+            <div class="mock-select">전체 수출타입 ▾</div>
+            <div class="mock-select">전체 기간 ▾</div>
+          </div>
+          <div class="mock-status-bar">
+            <span class="mstatus on">전체 (12)</span>
+            <span class="mstatus">접수 (3)</span>
+            <span class="mstatus">작업중 (4)</span>
+            <span class="mstatus">사진확보 (3)</span>
+            <span class="mstatus">청구완료 (2)</span>
+          </div>
+          <div class="mock-table">
+            <div class="mock-thead" style="grid-template-columns:90px 90px 1fr 160px 80px 70px 70px">
+              <span>접수일</span><span>화주명</span><span>차대번호</span><span>포워딩</span><span>컨테이너</span><span>반입지</span><span>상태</span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:90px 90px 1fr 160px 80px 70px 70px">
+              <span>02-24</span><span>홍길동</span><span>KNAG241ABPA239240<br><span style="font-size:10px;color:#aaa">K5</span></span><span>HANEX TRADE</span><span><span class="tag tag-roro">40ft</span></span><span>부산</span><span><span class="tag tag-new">접수</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:90px 90px 1fr 160px 80px 70px 70px">
+              <span>02-24</span><span>NUR AUTO</span><span>KNAG241ABRA266254<br><span style="font-size:10px;color:#aaa">K5</span></span><span>NUR AUTO</span><span><span class="tag tag-roro">20ft</span></span><span>인천</span><span><span class="tag tag-proc">작업중</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:90px 90px 1fr 160px 80px 70px 70px">
+              <span>02-23</span><span>ZAMA AUTO</span><span>W1NFD2DB1NA704532<br><span style="font-size:10px;color:#aaa">GLE400</span></span><span>SARWAR TRADING</span><span><span class="tag tag-roro">40ft</span></span><span>동해</span><span><span class="tag tag-done">완료</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:90px 90px 1fr 160px 80px 70px 70px">
+              <span>02-23</span><span>김철수</span><span>KNMK5C2HMPP032425<br><span style="font-size:10px;color:#aaa">XM3</span></span><span>HANEX TRADE</span><span><span class="tag tag-roro">40ft</span></span><span>부산</span><span><span class="tag tag-customs">사진확보</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 거래처 관리 -->
+      <div class="screen-panel" id="tab-client">
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-top">
+            <div class="mock-brand">🚢 쇼링장 ERP</div>
+            <div class="mock-brand-sub">× Odoo</div>
+          </div>
+          <div class="mock-nav-head">📋 거래처 관리</div>
+          <div class="mock-nav-item on">거래처 조회</div>
+          <div class="mock-nav-item">협력사 관리</div>
+          <div class="mock-nav-head">🚢 작업의뢰</div>
+          <div class="mock-nav-item">작업 조회</div>
+          <div class="mock-nav-item">작업 현황</div>
+          <div class="mock-nav-head">💰 청구서</div>
+          <div class="mock-nav-item">청구서 관리</div>
+          <div class="mock-nav-head">📦 비품·경비</div>
+          <div class="mock-nav-item">비품 관리</div>
+          <div class="mock-nav-item">경비 관리</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-topbar">
+            <div class="mock-page-title">📋 거래처 관리 (작업의뢰)</div>
+            <div style="display:flex;gap:6px">
+              <button class="mock-btn" style="background:#fff;color:var(--blue);border:1px solid var(--blue)">중단/해지</button>
+              <button class="mock-btn">+ 등록</button>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:14px">
+            <span style="background:rgba(26,95,212,0.1);color:var(--blue);font-size:12px;font-weight:700;padding:5px 14px;border-radius:100px">8 전체</span>
+            <span style="background:#f0f2f7;color:#666;font-size:12px;padding:5px 14px;border-radius:100px">8 법인</span>
+            <span style="background:#f0f2f7;color:#666;font-size:12px;padding:5px 14px;border-radius:100px">0 개인</span>
+          </div>
+          <div class="mock-searchbar">
+            <div class="mock-input">🔍 업체명, 사업자번호, 대표자명, 연락처 검색...</div>
+          </div>
+          <div class="mock-table">
+            <div class="mock-thead" style="grid-template-columns:1fr 120px 60px 110px 80px 60px 80px">
+              <span>업체명</span><span>사업자번호</span><span>유형</span><span>연락처</span><span>포워딩</span><span>작업수</span><span>관리</span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:1fr 120px 60px 110px 80px 60px 80px">
+              <span style="font-weight:600">HANEX TRADE</span><span>901-23-45678</span><span>법인</span><span>031-9012-3456</span><span>부산라인</span><span>24</span><span><span style="background:#fee2e2;color:#dc2626;font-size:11px;padding:2px 8px;border-radius:2px;margin-right:4px">중단</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:1fr 120px 60px 110px 80px 60px 80px">
+              <span style="font-weight:600">NUR AUTO</span><span>789-01-23456</span><span>법인</span><span>053-7890-1234</span><span>인천항</span><span>18</span><span><span style="background:#dcfce7;color:#16a34a;font-size:11px;padding:2px 8px;border-radius:2px">활성</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:1fr 120px 60px 110px 80px 60px 80px">
+              <span style="font-weight:600">ZAMA AUTO</span><span>890-12-34567</span><span>법인</span><span>02-8901-2345</span><span>동해항</span><span>11</span><span><span style="background:#dcfce7;color:#16a34a;font-size:11px;padding:2px 8px;border-radius:2px">활성</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:1fr 120px 60px 110px 80px 60px 80px">
+              <span style="font-weight:600">SARWAR TRADING</span><span>678-90-12345</span><span>법인</span><span>02-6789-0123</span><span>부산항</span><span>7</span><span><span style="background:#dcfce7;color:#16a34a;font-size:11px;padding:2px 8px;border-radius:2px">활성</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 월별 현황 -->
+      <div class="screen-panel" id="tab-monthly">
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-top">
+            <div class="mock-brand">🚢 쇼링장 ERP</div>
+            <div class="mock-brand-sub">× Odoo</div>
+          </div>
+          <div class="mock-nav-head">🚢 작업의뢰</div>
+          <div class="mock-nav-item on">작업 현황</div>
+          <div class="mock-nav-item">작업 조회</div>
+          <div class="mock-nav-head">💰 청구서</div>
+          <div class="mock-nav-item">청구서 관리</div>
+          <div class="mock-nav-head">📦 비품·경비</div>
+          <div class="mock-nav-item">비품 관리</div>
+          <div class="mock-nav-item">경비 관리</div>
+          <div class="mock-nav-head">👥 HR</div>
+          <div class="mock-nav-item">근태 관리</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-topbar">
+            <div class="mock-page-title">📅 월별 작업 현황</div>
+            <div style="font-size:13px;color:#888;display:flex;align-items:center;gap:8px">← 2026년 →</div>
+          </div>
+          <div class="mock-stats">
+            <div class="mstat">
+              <div class="mstat-icon" style="background:#EFF6FF">📋</div>
+              <div><div class="mstat-num">143</div><div class="mstat-label">총 작업 건수</div></div>
+            </div>
+            <div class="mstat">
+              <div class="mstat-icon" style="background:#ECFDF5">💰</div>
+              <div><div class="mstat-num">₩24.6M</div><div class="mstat-label">총 청구 금액</div></div>
+            </div>
+            <div class="mstat">
+              <div class="mstat-icon" style="background:#FFF7ED">🏢</div>
+              <div><div class="mstat-num">12</div><div class="mstat-label">거래 업체 수</div></div>
+            </div>
+          </div>
+          <div class="monthly-grid">
+            <div class="month-card"><div class="month-head"><span class="month-name">1월</span><span class="month-stat">18건 / ₩4.2M</span></div><div class="month-body"><div class="month-data">완료 15건 · 진행 3건</div></div></div>
+            <div class="month-card"><div class="month-head"><span class="month-name">2월</span><span class="month-stat">12건 / ₩2.8M</span></div><div class="month-body"><div class="month-data">완료 8건 · 진행 4건</div></div></div>
+            <div class="month-card"><div class="month-head"><span class="month-name">3월</span><span class="month-stat">0건 / ₩0</span></div><div class="month-body"><div class="month-empty">데이터 없음</div></div></div>
+            <div class="month-card"><div class="month-head"><span class="month-name">4월</span><span class="month-stat">0건 / ₩0</span></div><div class="month-body"><div class="month-empty">데이터 없음</div></div></div>
+            <div class="month-card"><div class="month-head"><span class="month-name">5월</span><span class="month-stat">0건 / ₩0</span></div><div class="month-body"><div class="month-empty">데이터 없음</div></div></div>
+            <div class="month-card"><div class="month-head"><span class="month-name">6월</span><span class="month-stat">0건 / ₩0</span></div><div class="month-body"><div class="month-empty">데이터 없음</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFIT -->
+<section class="benefit-section">
+  <div class="container">
+    <div class="sec-tag">WHY LANDING LOAD</div>
+    <h2 class="sec-title" style="color:#fff">도입 효과</h2>
+    <p class="sec-desc">쇼링장 현업 흐름을 직접 분석해 설계한 시스템입니다.</p>
+    <div class="benefit-grid">
+      <div class="benefit-card">
+        <div class="benefit-num">80<span>%</span></div>
+        <div class="benefit-label">행정 시간 단축</div>
+        <div class="benefit-desc">엑셀 수작업 대비 데이터 입력·조회 시간 대폭 감소</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-num">0<span>건</span></div>
+        <div class="benefit-label">누락 방지</div>
+        <div class="benefit-desc">쇼링리스트·사진정보·반입지 자동 체크로 누락 제로화</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-num">3<span>주</span></div>
+        <div class="benefit-label">도입 완료</div>
+        <div class="benefit-desc">기획 확정 후 평균 3주 내 운영 시작 가능</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-num">24<span>h</span></div>
+        <div class="benefit-label">실시간 현황</div>
+        <div class="benefit-desc">작업 진행 상황을 언제 어디서나 모바일로 확인</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLY -->
+<section class="apply-section" id="apply">
+  <div class="container">
+    <div class="sec-tag">CONTACT</div>
+    <h2 class="sec-title">쇼링장 ERP 도입 상담</h2>
+    <p class="sec-desc">무료 상담을 통해 우리 쇼링장에 맞는 구성을 확인하세요.</p>
+    <div class="apply-layout">
+      <div class="apply-info">
+        <h3>도입 전 꼭 확인하세요</h3>
+        <p>단순 소프트웨어 판매가 아닙니다. 쇼링장 업무 흐름을 직접 분석한 후 커스터마이징 범위와 비용을 투명하게 안내드립니다.</p>
+        <div class="apply-contact">
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-label">전화 상담</div>
+              <div class="contact-val">1668-1653</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">⏰</div>
+            <div>
+              <div class="contact-label">운영 시간</div>
+              <div class="contact-val">평일 09:00 ~ 18:00</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">💬</div>
+            <div>
+              <div class="contact-label">빠른 상담</div>
+              <div class="contact-val">실시간 채팅 상담 가능</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="apply-form">
+        <h3>무료 상담 신청</h3>
+        <div class="form-row">
+          <label class="form-label">회사명 <span class="req">*</span></label>
+          <input class="form-input" type="text" placeholder="쇼링장 업체명을 입력해주세요.">
+        </div>
+        <div class="form-row">
+          <label class="form-label">담당자명 <span class="req">*</span></label>
+          <input class="form-input" type="text" placeholder="담당자 성함">
+        </div>
+        <div class="form-row">
+          <label class="form-label">연락처 <span class="req">*</span></label>
+          <input class="form-input" type="text" placeholder="010-XXXX-XXXX">
+        </div>
+        <div class="form-row">
+          <label class="form-label">주요 관심 모듈</label>
+          <div class="form-radio-group">
+            <label class="form-radio"><input type="checkbox"> 작업의뢰 관리</label>
+            <label class="form-radio"><input type="checkbox"> 거래처 관리</label>
+            <label class="form-radio"><input type="checkbox"> 청구서 관리</label>
+            <label class="form-radio"><input type="checkbox"> 비품·경비</label>
+            <label class="form-radio"><input type="checkbox"> HR 관리</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">상세 문의사항</label>
+          <textarea class="form-input" rows="3" placeholder="현재 불편한 점, 원하는 기능 등을 자유롭게 입력해주세요."></textarea>
+        </div>
+        <div class="form-agree">
+          <input type="checkbox" id="agree">
+          <label for="agree">개인정보 수집 및 이용에 동의합니다.</label>
+        </div>
+        <button class="form-submit">무료 상담 신청하기</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">Landing Load</div>
+  <div class="footer-phone">1668-1653</div>
+  <div class="footer-copy">© 2024 Landing Load Korea. All rights reserved.</div>
+</footer>
+
+<script>
+function switchTab(id, el) {
+  document.querySelectorAll('.stab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.screen-panel').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById(id).classList.add('on');
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>

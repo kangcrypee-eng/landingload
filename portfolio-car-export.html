@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중고차 수출 ERP 포트폴리오 | Landing Load</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Barlow+Condensed:wght@600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0b1f3a;
+  --blue: #1a5fd4;
+  --steel: #2a3a5c;
+  --accent: #F5A623;
+  --mint: #00C9A7;
+  --red: #e53e3e;
+  --green: #38a169;
+  --light: #F4F7FF;
+  --border: #e4e8f0;
+  --muted: #6b7a99;
+  --white: #fff;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Noto Sans KR',sans-serif; background:#fff; color:var(--navy); }
+a { text-decoration:none; color:inherit; }
+
+/* NAV */
+.site-nav {
+  background:var(--navy); height:52px;
+  display:flex; align-items:center; justify-content:space-between; padding:0 40px;
+}
+.nav-back { display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.6); font-size:13px; transition:color .15s; }
+.nav-back:hover { color:#fff; }
+.nav-brand { font-family:'Montserrat',sans-serif; font-weight:800; font-size:16px; color:#fff; }
+.nav-phone { font-family:'Montserrat',sans-serif; font-weight:700; font-size:15px; color:var(--accent); }
+
+/* HERO */
+.hero {
+  background:linear-gradient(135deg,#0b1f3a 0%,#0d3460 60%,#1a3a6b 100%);
+  padding:72px 80px 64px; position:relative; overflow:hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,0.015) 40px,rgba(255,255,255,0.015) 80px);
+}
+.hero-inner { position:relative; z-index:2; max-width:1200px; margin:0 auto; }
+.hero-breadcrumb { display:flex; align-items:center; gap:6px; font-size:12px; color:rgba(255,255,255,0.4); margin-bottom:24px; }
+.hero-breadcrumb span { color:rgba(255,255,255,0.6); }
+.hero-breadcrumb .sep { color:rgba(255,255,255,0.2); }
+.hero-layout { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+
+.hero-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(245,166,35,0.12); border:1px solid rgba(245,166,35,0.3);
+  color:var(--accent); font-size:11px; font-weight:700; letter-spacing:1.5px;
+  padding:5px 14px; border-radius:2px; margin-bottom:20px; text-transform:uppercase;
+}
+.hero-tag-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:pulse 2s infinite; }
+.hero-title { font-family:'Barlow Condensed',sans-serif; font-size:56px; font-weight:800; color:#fff; line-height:1.05; margin-bottom:16px; }
+.hero-title .hl { color:var(--accent); }
+.hero-title .mint { color:var(--mint); }
+.hero-subtitle { font-size:15px; color:rgba(255,255,255,0.55); line-height:1.75; margin-bottom:32px; max-width:440px; }
+.hero-chips { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px; }
+.chip { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.75); font-size:12px; font-weight:500; padding:6px 14px; border-radius:2px; }
+.hero-ctas { display:flex; gap:10px; }
+.btn-main { background:var(--blue); color:#fff; font-weight:700; font-size:14px; padding:13px 26px; border-radius:3px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; }
+.btn-main:hover { background:#1450bb; transform:translateY(-1px); }
+.btn-outline { background:transparent; color:rgba(255,255,255,0.8); font-weight:600; font-size:14px; padding:13px 26px; border-radius:3px; border:1.5px solid rgba(255,255,255,0.2); cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; }
+.btn-outline:hover { border-color:rgba(255,255,255,0.5); color:#fff; }
+
+/* ERP Preview */
+.erp-preview { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; overflow:hidden; }
+.erp-preview-bar { background:rgba(255,255,255,0.06); padding:10px 16px; display:flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.erp-bar-dot { width:10px; height:10px; border-radius:50%; }
+.erp-preview-body { display:grid; grid-template-columns:190px 1fr; min-height:320px; }
+.erp-sidebar { background:rgba(10,20,40,0.7); border-right:1px solid rgba(255,255,255,0.07); padding:12px 0; }
+.erp-s-logo { padding:10px 14px 14px; border-bottom:1px solid rgba(255,255,255,0.07); margin-bottom:8px; }
+.erp-s-logo-name { font-size:12px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px; }
+.erp-s-logo-sub { font-size:10px; color:rgba(255,255,255,0.3); margin-top:2px; }
+.erp-s-head { padding:8px 14px 4px; font-size:10px; font-weight:700; color:rgba(255,255,255,0.3); letter-spacing:.5px; text-transform:uppercase; display:flex; align-items:center; gap:6px; }
+.erp-s-item { padding:7px 14px 7px 24px; font-size:12px; color:rgba(255,255,255,0.55); cursor:pointer; transition:all .15s; }
+.erp-s-item:hover, .erp-s-item.on { background:rgba(26,95,212,0.25); color:#fff; }
+.erp-s-item.on { border-left:3px solid var(--blue); padding-left:21px; }
+.erp-main { padding:16px; }
+.erp-main-title { font-size:13px; font-weight:700; color:#fff; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.erp-alert { background:rgba(245,166,35,0.1); border:1px solid rgba(245,166,35,0.3); border-radius:6px; padding:10px 14px; margin-bottom:12px; }
+.erp-alert-num { font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:700; color:var(--accent); }
+.erp-alert-label { font-size:10px; color:rgba(255,255,255,0.4); }
+.erp-status-row { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:10px; }
+.erp-status { padding:4px 10px; border-radius:100px; font-size:10px; font-weight:700; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.5); }
+.erp-status.on { background:var(--blue); color:#fff; border-color:var(--blue); }
+.erp-row { display:grid; gap:6px; padding:7px 8px; border-bottom:1px solid rgba(255,255,255,0.05); align-items:center; }
+.erp-row span { font-size:11px; color:rgba(255,255,255,0.65); }
+.erp-th { background:rgba(255,255,255,0.05); border-radius:3px; margin-bottom:4px; }
+.erp-th span { font-size:10px; color:rgba(255,255,255,0.35) !important; font-weight:700; }
+.badge { display:inline-block; padding:2px 7px; border-radius:2px; font-size:10px; font-weight:700; }
+.b-roro { background:rgba(26,95,212,0.25); color:#7db3ff; }
+.b-new { background:rgba(245,166,35,0.2); color:var(--accent); }
+.b-proc { background:rgba(139,92,246,0.2); color:#c4b5fd; }
+.b-done { background:rgba(56,161,105,0.2); color:#68d391; }
+.b-submit { background:rgba(0,201,167,0.2); color:var(--mint); }
+
+/* SECTIONS */
+.container { max-width:1200px; margin:0 auto; }
+.sec { padding:72px 80px; }
+.sec-tag { font-size:11px; font-weight:700; letter-spacing:2px; color:var(--blue); text-transform:uppercase; margin-bottom:10px; }
+.sec-title { font-size:32px; font-weight:800; line-height:1.2; margin-bottom:12px; }
+.sec-desc { font-size:14px; color:var(--muted); line-height:1.75; }
+
+/* MODULES */
+.modules-section { background:var(--light); }
+.modules-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:40px; }
+.mod-card { background:#fff; border:1px solid var(--border); border-radius:10px; padding:28px 24px; transition:all .25s; cursor:pointer; position:relative; overflow:hidden; }
+.mod-card::after { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--blue); transform:scaleY(0); transform-origin:bottom; transition:transform .25s; }
+.mod-card:hover { box-shadow:0 8px 32px rgba(26,95,212,0.1); transform:translateY(-3px); }
+.mod-card:hover::after { transform:scaleY(1); }
+.mod-icon { width:48px; height:48px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:16px; }
+.mod-title { font-size:15px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+.mod-desc { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:14px; }
+.mod-features { list-style:none; }
+.mod-features li { font-size:12px; color:#444; padding:4px 0; display:flex; align-items:center; gap:6px; border-bottom:1px solid #f5f6f8; }
+.mod-features li:last-child { border-bottom:none; }
+.mod-features li::before { content:'·'; color:var(--blue); font-weight:700; font-size:16px; flex-shrink:0; }
+
+/* SCREENS */
+.screens-section { background:#fff; }
+.screens-tabs { display:flex; gap:4px; margin-bottom:32px; border-bottom:2px solid var(--border); }
+.stab { padding:10px 22px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px; transition:all .2s; }
+.stab:hover { color:var(--navy); }
+.stab.on { color:var(--blue); border-bottom-color:var(--blue); }
+.screen-panel { display:none; }
+.screen-panel.on { display:grid; grid-template-columns:240px 1fr; gap:0; border:1px solid var(--border); border-radius:10px; overflow:hidden; min-height:500px; }
+
+/* Mock sidebar */
+.mock-sidebar { background:#1e2a3e; padding:0; }
+.mock-sidebar-top { padding:14px 16px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.mock-brand { font-size:13px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px; }
+.mock-brand-ico { width:28px; height:28px; background:linear-gradient(135deg,#e53e3e,#c53030); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:14px; }
+.mock-brand-sub { font-size:10px; color:rgba(255,255,255,0.35); margin-top:2px; }
+.mock-nav-head { padding:10px 16px 4px; font-size:10px; font-weight:700; letter-spacing:.5px; color:rgba(255,255,255,0.3); text-transform:uppercase; display:flex; align-items:center; gap:6px; }
+.mock-nav-item { padding:7px 16px 7px 26px; font-size:12.5px; color:rgba(255,255,255,0.55); cursor:pointer; transition:all .15s; }
+.mock-nav-item:hover, .mock-nav-item.on { background:rgba(26,95,212,0.2); color:#fff; }
+.mock-nav-item.on { border-left:3px solid var(--blue); padding-left:23px; }
+
+/* Mock content */
+.mock-content { background:#f4f6fb; padding:20px; overflow:auto; }
+.mock-topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.mock-page-title { font-size:17px; font-weight:700; color:var(--navy); display:flex; align-items:center; gap:8px; }
+.mock-btn-row { display:flex; gap:6px; }
+.mock-btn { background:var(--blue); color:#fff; font-size:11px; font-weight:700; padding:6px 14px; border-radius:4px; border:none; cursor:pointer; display:flex; align-items:center; gap:5px; white-space:nowrap; }
+.mock-btn.orange { background:#9f7ae1; }
+.mock-btn.gray { background:#4a5568; }
+.mock-btn.dark { background:#2d3748; }
+
+/* alert box */
+.mock-alert-box { background:#fff; border:1px solid #e8eaf0; border-radius:8px; padding:14px 16px; margin-bottom:16px; display:flex; gap:16px; }
+.mock-alert-item { display:flex; align-items:center; gap:12px; flex:1; border-right:1px solid #f0f2f7; padding-right:16px; }
+.mock-alert-item:last-child { border-right:none; }
+.mock-alert-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.mock-alert-num { font-size:22px; font-weight:800; color:var(--navy); line-height:1; }
+.mock-alert-label { font-size:11px; color:#999; }
+
+/* searchbar */
+.mock-searchbar { background:#fff; border:1px solid #e8eaf0; border-radius:4px; padding:8px 12px; font-size:12px; color:#aaa; display:flex; align-items:center; gap:6px; margin-bottom:12px; }
+.mock-filters { display:flex; gap:8px; margin-bottom:12px; }
+.mock-filter { background:#fff; border:1px solid #dde2ec; border-radius:4px; padding:6px 12px; font-size:12px; color:#666; }
+
+/* status tabs */
+.mock-status-row { display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap; }
+.mst { padding:6px 12px; border-radius:100px; font-size:12px; font-weight:600; border:1.5px solid #dde2ec; color:#666; cursor:pointer; display:flex; align-items:center; gap:4px; }
+.mst.on { background:var(--blue); color:#fff; border-color:var(--blue); }
+.mst .cnt { background:rgba(255,255,255,0.25); padding:1px 6px; border-radius:100px; font-size:10px; }
+.mst.warn.on { background:#e53e3e; border-color:#e53e3e; }
+.mst.warn .cnt { background:rgba(255,255,255,0.3); }
+
+/* table */
+.mock-table { background:#fff; border-radius:6px; border:1px solid #e8eaf0; overflow:hidden; }
+.mock-thead { display:grid; padding:9px 14px; background:#f8f9fc; border-bottom:1px solid #e8eaf0; }
+.mock-thead span { font-size:11px; font-weight:700; color:#888; }
+.mock-trow { display:grid; padding:10px 14px; border-bottom:1px solid #f0f2f7; align-items:center; cursor:pointer; transition:background .15s; }
+.mock-trow:hover { background:#f8faff; }
+.mock-trow:last-child { border-bottom:none; }
+.mock-trow span { font-size:12px; color:#444; }
+
+/* stat summary cards */
+.mock-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:16px; }
+.mstat { background:#fff; border:1px solid #e8eaf0; border-radius:6px; padding:14px 12px; border-top:3px solid transparent; }
+.mstat.blue { border-top-color:#3182ce; }
+.mstat.teal { border-top-color:#38b2ac; }
+.mstat.green { border-top-color:#38a169; }
+.mstat.orange { border-top-color:#dd6b20; }
+.mstat.red { border-top-color:#e53e3e; }
+.mstat-label { font-size:11px; color:#999; margin-bottom:4px; }
+.mstat-num { font-size:20px; font-weight:800; color:var(--navy); }
+.mstat-num.blue { color:#3182ce; }
+.mstat-num.teal { color:#38b2ac; }
+.mstat-num.green { color:#38a169; }
+.mstat-num.orange { color:#dd6b20; }
+.mstat-num.red { color:#e53e3e; }
+
+/* tag chips */
+.tag { display:inline-block; padding:2px 8px; border-radius:2px; font-size:11px; font-weight:700; }
+.t-roro { background:#EFF6FF; color:var(--blue); }
+.t-container { background:#F0FDF4; color:#16a34a; }
+.t-new { background:#FFF7ED; color:#d97706; border:1px solid #fde68a; }
+.t-proc { background:#EFF6FF; color:var(--blue); }
+.t-submit { background:#F0FDF4; color:#16a34a; }
+.t-done { background:#ECFDF5; color:#059669; }
+.t-wait { background:#FEF9C3; color:#92400e; }
+.t-ai { background:#FAF5FF; color:#7c3aed; }
+
+/* bigdata table */
+.bd-table { background:#fff; border-radius:6px; border:1px solid #e8eaf0; overflow:hidden; }
+.bd-thead { display:grid; padding:9px 14px; background:#1e2a3e; }
+.bd-thead span { font-size:11px; font-weight:700; color:rgba(255,255,255,0.6); }
+.bd-row { display:grid; padding:9px 14px; border-bottom:1px solid #f0f2f7; align-items:center; }
+.bd-row:nth-child(even) { background:#f9fbff; }
+.bd-row span { font-size:11px; color:#444; }
+
+/* billing cards */
+.bill-cards { display:flex; flex-direction:column; gap:10px; }
+.bill-card { background:#fff; border:1px solid #e8eaf0; border-radius:6px; padding:14px 16px; }
+.bill-card-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.bill-company { font-size:14px; font-weight:700; color:var(--navy); display:flex; align-items:center; gap:8px; }
+.bill-amount { font-size:14px; font-weight:700; color:var(--navy); }
+.bill-unpaid { font-size:12px; color:#e53e3e; font-weight:600; }
+.bill-btns { display:flex; gap:6px; }
+.bill-btn { padding:5px 12px; border-radius:3px; font-size:11px; font-weight:700; border:none; cursor:pointer; display:flex; align-items:center; gap:4px; }
+.bb-green { background:#38a169; color:#fff; }
+.bb-kakao { background:#FEE500; color:#3C1E1E; }
+.bb-excel { background:#217346; color:#fff; }
+
+/* BENEFIT */
+.benefit-section { background:linear-gradient(135deg,#0b1f3a 0%,#1a3a6b 100%); padding:72px 80px; }
+.benefit-section .sec-tag { color:var(--accent); }
+.benefit-section .sec-title { color:#fff; }
+.benefit-section .sec-desc { color:rgba(255,255,255,0.5); }
+.benefit-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:40px; }
+.benefit-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:28px 22px; text-align:center; transition:all .2s; }
+.benefit-card:hover { background:rgba(255,255,255,0.08); transform:translateY(-3px); }
+.benefit-num { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:44px; color:var(--accent); line-height:1; margin-bottom:8px; }
+.benefit-num span { font-size:22px; }
+.benefit-label { font-size:13px; font-weight:700; color:#fff; margin-bottom:6px; }
+.benefit-desc { font-size:12px; color:rgba(255,255,255,0.45); line-height:1.6; }
+
+/* APPLY */
+.apply-section { background:var(--light); padding:72px 80px; }
+.apply-layout { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; margin-top:40px; }
+.apply-info h3 { font-size:20px; font-weight:700; margin-bottom:16px; }
+.apply-info p { font-size:14px; color:var(--muted); line-height:1.75; margin-bottom:24px; }
+.apply-contact { display:flex; flex-direction:column; gap:12px; }
+.contact-item { display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--border); border-radius:8px; padding:14px 18px; }
+.contact-icon { font-size:20px; flex-shrink:0; }
+.contact-label { font-size:11px; color:var(--muted); }
+.contact-val { font-size:14px; font-weight:700; color:var(--navy); }
+.apply-form { background:#fff; border:1px solid var(--border); border-radius:10px; padding:32px; }
+.apply-form h3 { font-size:17px; font-weight:700; margin-bottom:24px; color:var(--navy); }
+.form-row { margin-bottom:16px; }
+.form-label { font-size:12px; font-weight:600; color:#444; margin-bottom:6px; display:block; }
+.form-label .req { color:#e53e3e; margin-left:2px; }
+.form-input { width:100%; border:1.5px solid #e4e8f0; border-radius:4px; padding:10px 14px; font-size:13px; color:#333; font-family:'Noto Sans KR',sans-serif; outline:none; transition:border .15s; }
+.form-input:focus { border-color:var(--blue); }
+.form-input::placeholder { color:#bbb; }
+.form-radio-group { display:flex; flex-wrap:wrap; gap:8px; }
+.form-radio { display:flex; align-items:center; gap:5px; font-size:12.5px; color:#555; cursor:pointer; }
+.form-radio input { accent-color:var(--blue); }
+.form-submit { width:100%; background:var(--navy); color:#fff; font-weight:700; font-size:14px; padding:13px; border-radius:4px; border:none; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:background .15s; margin-top:8px; }
+.form-submit:hover { background:#1a3a6b; }
+.form-agree { display:flex; align-items:center; gap:8px; font-size:12px; color:#888; margin-bottom:12px; }
+.form-agree input { accent-color:var(--blue); }
+
+/* FOOTER */
+.site-footer { background:#08131f; padding:28px 80px; display:flex; align-items:center; justify-content:space-between; }
+.footer-brand { font-family:'Montserrat',sans-serif; font-weight:800; font-size:15px; color:#fff; }
+.footer-phone { font-family:'Montserrat',sans-serif; font-weight:700; font-size:16px; color:#4fc3f7; }
+.footer-copy { font-size:11px; color:rgba(255,255,255,0.25); }
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="main-landing.html" class="nav-back">← 메인으로</a>
+  <span class="nav-brand">Landing Load</span>
+  <span class="nav-phone">1668-1653</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-breadcrumb">
+      <a href="main-landing.html">홈</a><span class="sep">›</span>
+      <span>포트폴리오</span><span class="sep">›</span>
+      <span style="color:rgba(255,255,255,0.75)">중고차 수출 ERP</span>
+    </div>
+    <div class="hero-layout">
+      <div>
+        <div class="hero-tag"><div class="hero-tag-dot"></div>ERP · 중고차 수출 무역</div>
+        <h1 class="hero-title">
+          중고차 수출 업무<br>
+          <span class="hl">전 과정 자동화</span>
+        </h1>
+        <p class="hero-subtitle">
+          말소·면장·청구서·빅데이터 분석까지 — 중고차 수출 특화 Odoo ERP로
+          AI 서류 자동 분류부터 $36,920,086,027 규모 거래 관리까지 처리하세요.
+        </p>
+        <div class="hero-chips">
+          <span class="chip">🚗 차량말소 관리</span>
+          <span class="chip">📄 면장(통관) 관리</span>
+          <span class="chip">🤖 AI 서류 자동분류</span>
+          <span class="chip">💰 청구서 자동발급</span>
+          <span class="chip">📊 빅데이터 분석</span>
+          <span class="chip">👥 HR·인사관리</span>
+        </div>
+        <div class="hero-ctas">
+          <a href="#apply" class="btn-main">무료 상담 신청하기</a>
+          <a href="#modules" class="btn-outline">기능 살펴보기 ↓</a>
+        </div>
+      </div>
+
+      <!-- ERP Preview -->
+      <div class="erp-preview">
+        <div class="erp-preview-bar">
+          <div class="erp-bar-dot" style="background:#ff5f57"></div>
+          <div class="erp-bar-dot" style="background:#ffbd2e"></div>
+          <div class="erp-bar-dot" style="background:#28c840"></div>
+          <span style="font-size:11px;color:rgba(255,255,255,0.3);margin-left:8px">🚗 ILOAD Export · 면장 현황</span>
+        </div>
+        <div class="erp-preview-body">
+          <div class="erp-sidebar">
+            <div class="erp-s-logo">
+              <div class="erp-s-logo-name">🚗 ILOAD Export</div>
+              <div class="erp-s-logo-sub">× Odoo</div>
+            </div>
+            <div class="erp-s-head">🚗 차량말소</div>
+            <div class="erp-s-item">말소 입력</div>
+            <div class="erp-s-item">말소 조회</div>
+            <div class="erp-s-item">말소 현황</div>
+            <div class="erp-s-head">📄 면장(통관)</div>
+            <div class="erp-s-item on">면장 조회</div>
+            <div class="erp-s-item">면장 현황</div>
+            <div class="erp-s-head">💰 청구서</div>
+            <div class="erp-s-item">면장 청구 현황</div>
+          </div>
+          <div class="erp-main">
+            <div class="erp-main-title">📄 면장 조회</div>
+            <div class="erp-alert" style="display:flex;gap:12px;align-items:center">
+              <div>
+                <div class="erp-alert-num">40</div>
+                <div class="erp-alert-label">처리필요</div>
+              </div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.5">AI 완료, 서류 준비됨<br>관세팀 확인 대기 중</div>
+            </div>
+            <div class="erp-status-row">
+              <span class="erp-status on">내담당 8</span>
+              <span class="erp-status">전체 139</span>
+              <span class="erp-status" style="color:#f87171">처리필요 40</span>
+              <span class="erp-status">승인 81</span>
+            </div>
+            <div class="erp-row erp-th" style="grid-template-columns:1fr 60px 60px 55px 55px">
+              <span>신고서</span><span>업체</span><span>수출타입</span><span>금액</span><span>상태</span>
+            </div>
+            <div class="erp-row" style="grid-template-columns:1fr 60px 60px 55px 55px">
+              <span style="font-size:10px">면장-260225-002</span><span style="font-size:10px">HANEX</span><span><span class="badge b-roro">RO-RO</span></span><span style="font-size:10px">0 KRW</span><span><span class="badge b-new">작성중</span></span>
+            </div>
+            <div class="erp-row" style="grid-template-columns:1fr 60px 60px 55px 55px">
+              <span style="font-size:10px">면장-260225-001</span><span style="font-size:10px">NUR AUTO</span><span><span class="badge b-roro">RO-RO</span></span><span style="font-size:10px">0 KRW</span><span><span class="badge b-proc">처리중</span></span>
+            </div>
+            <div class="erp-row" style="grid-template-columns:1fr 60px 60px 55px 55px">
+              <span style="font-size:10px">면장-260224-015</span><span style="font-size:10px">ZAMA</span><span><span class="badge b-roro">RO-RO</span></span><span style="font-size:10px">$4,200</span><span><span class="badge b-done">승인</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="sec modules-section" id="modules">
+  <div class="container">
+    <div class="sec-tag">ERP MODULES</div>
+    <h2 class="sec-title">중고차 수출 특화 7대 기능 모듈</h2>
+    <p class="sec-desc">AI 서류 자동 분류부터 빅데이터 분석까지, 수출 전 과정을 하나의 시스템으로 관리합니다.</p>
+    <div class="modules-grid">
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#FFF5F5">🚗</div>
+        <div class="mod-title">차량말소 관리</div>
+        <div class="mod-desc">AI가 서류를 자동으로 분류·그룹핑. 하나의 PDF에 여러 차량 서류가 있어도 자동으로 분리합니다.</div>
+        <ul class="mod-features">
+          <li>PDF·JPG·PNG 일괄 업로드 → AI 자동 분류</li>
+          <li>차대번호·등록번호·차종·소유자명 검색</li>
+          <li>번호판 미확인 건 알림 (사진 매칭)</li>
+          <li>말소 현황 월별·거래처별 집계</li>
+          <li>말소 신청서 자동 다운로드</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#EFF6FF">📄</div>
+        <div class="mod-title">면장(통관) 관리</div>
+        <div class="mod-desc">RO-RO·컨테이너 수출타입별 면장을 관리하고, AI 분석으로 서류를 자동 완성합니다.</div>
+        <ul class="mod-features">
+          <li>면장 입력·조회·현황 통합 관리</li>
+          <li>AI 분석으로 인보이스·패킹리스트 자동생성</li>
+          <li>관세팀 제출·승인 워크플로우</li>
+          <li>3일+ 미제출 건 자동 알림</li>
+          <li>수출타입·목적지·금액 현황 대시보드</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#F0FDF4">💰</div>
+        <div class="mod-title">청구서 관리</div>
+        <div class="mod-desc">거래처별 청구서를 월별로 집계하고, 카카오톡·엑셀로 즉시 공유합니다.</div>
+        <ul class="mod-features">
+          <li>말소·면장 청구 현황 통합</li>
+          <li>거래처별 청구·입금·미수금 자동 집계</li>
+          <li>카카오톡 청구서 복사 발송</li>
+          <li>엑셀 다운로드 지원</li>
+          <li>일괄 청구 생성 기능</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#FAF5FF">📊</div>
+        <div class="mod-title">빅데이터 분석</div>
+        <div class="mod-desc">4,159건 이상의 차량 수출 데이터를 국가별·차종별·월별·연식별로 분석합니다.</div>
+        <ul class="mod-features">
+          <li>전체·국가별·차종별·월별·연식·배기량·가격대 분석</li>
+          <li>수출 국가별 현황 (키르기스스탄, 러시아 등)</li>
+          <li>RO-RO vs 컨테이너 수출 비율</li>
+          <li>엑셀·피벗 다운로드</li>
+          <li>기간별·거래처별 필터링</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#FFFBEB">🏢</div>
+        <div class="mod-title">거래처 관리</div>
+        <div class="mod-desc">바이어·수출업체·협력사를 통합 관리하고 거래 이력을 추적합니다.</div>
+        <ul class="mod-features">
+          <li>거래처 조회·등록·중단·해지 관리</li>
+          <li>초성 검색 지원</li>
+          <li>협력사 관리 (포워딩·관세사 등)</li>
+          <li>CMS 구독로 관리</li>
+          <li>거래처별·월별 조회</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#FFF0F0">🔄</div>
+        <div class="mod-title">환급신고 관리</div>
+        <div class="mod-desc">월별 신고 서류와 신청 내역을 체계적으로 관리합니다.</div>
+        <ul class="mod-features">
+          <li>월별 신고 서류 관리</li>
+          <li>신청 내역 확인</li>
+          <li>환급 신고 현황 추적</li>
+          <li>처리 상태별 분류</li>
+        </ul>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon" style="background:#F0FDF4">👥</div>
+        <div class="mod-title">HR·인사관리</div>
+        <div class="mod-desc">직원 HR 대시보드와 근태 관리를 통합 지원합니다.</div>
+        <ul class="mod-features">
+          <li>HR 대시보드</li>
+          <li>근태 관리</li>
+          <li>담당자별 업무 배정</li>
+          <li>인사 현황 집계</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ERP SCREENS -->
+<section class="sec screens-section" id="screens">
+  <div class="container">
+    <div class="sec-tag">ACTUAL SCREENS</div>
+    <h2 class="sec-title">실제 ERP 화면 미리보기</h2>
+    <p class="sec-desc">현재 실제 운영 중인 ILOAD Export ERP 화면입니다. (총 4,159건+ 데이터 운영 중)</p>
+
+    <div style="margin-top:32px">
+      <div class="screens-tabs">
+        <div class="stab on" onclick="switchTab('tab-malso',this)">말소 조회</div>
+        <div class="stab" onclick="switchTab('tab-myunjang',this)">면장 조회</div>
+        <div class="stab" onclick="switchTab('tab-status',this)">면장 현황</div>
+        <div class="stab" onclick="switchTab('tab-billing',this)">면장 청구 현황</div>
+        <div class="stab" onclick="switchTab('tab-bigdata',this)">빅데이터 분석</div>
+      </div>
+
+      <!-- 말소 조회 -->
+      <div class="screen-panel on" id="tab-malso">
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-top">
+            <div class="mock-brand"><div class="mock-brand-ico">🚗</div> ILOAD Export</div>
+            <div class="mock-brand-sub">× Odoo</div>
+          </div>
+          <div class="mock-nav-head">🚗 차량말소</div>
+          <div class="mock-nav-item on">말소 조회</div>
+          <div class="mock-nav-item">말소 현황</div>
+          <div class="mock-nav-head">📄 면장(통관)</div>
+          <div class="mock-nav-item">면장 입력</div>
+          <div class="mock-nav-item">면장 조회</div>
+          <div class="mock-nav-head">💰 청구서</div>
+          <div class="mock-nav-item">말소 청구 출력</div>
+          <div class="mock-nav-item">면장 청구 현황</div>
+          <div class="mock-nav-head">📊 빅데이터</div>
+          <div class="mock-nav-item">빅데이터 추출</div>
+          <div class="mock-nav-head">👥 인사관리</div>
+          <div class="mock-nav-item">HR 대시보드</div>
+          <div class="mock-nav-item">근태 관리</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-topbar">
+            <div class="mock-page-title">🚗 말소 조회</div>
+            <div class="mock-btn-row">
+              <button class="mock-btn">+ 말소 입력</button>
+              <button class="mock-btn orange">↑ 말소중 일괄 업로드</button>
+              <button class="mock-btn gray">↓ 말소 신청서 다운로드</button>
+            </div>
+          </div>
+          <!-- 처리필요 알림 -->
+          <div class="mock-alert-box">
+            <div class="mock-alert-item">
+              <div class="mock-alert-icon" style="background:#FFF7ED">⚠️</div>
+              <div>
+                <div class="mock-alert-num" style="color:#d97706">10건</div>
+                <div class="mock-alert-label">번호판 미확인 · 사진 매칭 또는 수동 확인</div>
+              </div>
+            </div>
+          </div>
+          <div class="mock-searchbar">🔍 차대번호, 등록번호, 차종, 소유자명, 업체명, 초성 검색...</div>
+          <div class="mock-filters">
+            <div class="mock-filter">전체 유형 ▾</div>
+            <div class="mock-filter">전체 기간 ▾</div>
+          </div>
+          <div class="mock-status-row">
+            <span class="mst on">내 담당 <span class="cnt">10</span></span>
+            <span class="mst">전체 <span class="cnt">17</span></span>
+            <span class="mst warn on" style="background:#e53e3e;border-color:#e53e3e">처리필요 <span class="cnt">15</span></span>
+            <span class="mst">초안 <span class="cnt">11</span></span>
+            <span class="mst">처리중 <span class="cnt">4</span></span>
+            <span class="mst">제출완료 <span class="cnt">0</span></span>
+            <span class="mst">말소완료 <span class="cnt">2</span></span>
+          </div>
+          <div style="font-size:12px;color:#666;margin-bottom:10px">내 담당 10건</div>
+          <div class="mock-table">
+            <div class="mock-thead" style="grid-template-columns:130px 100px 120px 60px 60px 80px 70px 80px 80px">
+              <span>차대번호</span><span>등록번호</span><span>차종</span><span>저당</span><span>압류</span><span>신청종류</span><span>서류</span><span>번호판</span><span>상태</span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:130px 100px 120px 60px 60px 80px 70px 80px 80px">
+              <span style="font-weight:600;font-size:11px">KNAF241BENA936646</span><span>119더4044</span><span>K3</span><span><span class="tag" style="background:#f0f2f7;color:#888">없음</span></span><span><span class="tag" style="background:#f0f2f7;color:#888">없음</span></span><span><span class="tag t-ai">자동차</span></span><span style="color:var(--blue);font-weight:600">4/4</span><span><span style="color:#e53e3e">✕</span></span><span><span class="tag t-wait">처리중</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:130px 100px 120px 60px 60px 80px 70px 80px 80px">
+              <span style="font-weight:600;font-size:11px">KMHLM41EEMU203731</span><span>203더4907</span><span>아반떼</span><span><span class="tag" style="background:#f0f2f7;color:#888">없음</span></span><span><span class="tag" style="background:#f0f2f7;color:#888">없음</span></span><span><span class="tag t-ai">자동차</span></span><span style="color:var(--blue);font-weight:600">4/4</span><span><span style="color:#e53e3e">✕</span></span><span><span class="tag t-wait">처리중</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:130px 100px 120px 60px 60px 80px 70px 80px 80px">
+              <span style="font-weight:600;font-size:11px">KNAGN419BFA604784</span><span>38무7516</span><span>K5</span><span><span class="tag" style="background:#f0f2f7;color:#888">없음</span></span><span><span class="tag" style="background:#f0f2f7;color:#888">없음</span></span><span><span class="tag t-ai">자동차</span></span><span style="color:var(--blue);font-weight:600">4/4</span><span><span style="color:#38a169">✓</span></span><span><span class="tag t-done">말소완료</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 면장 조회 -->
+      <div class="screen-panel" id="tab-myunjang">
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-top">
+            <div class="mock-brand"><div class="mock-brand-ico">🚗</div> ILOAD Export</div>
+            <div class="mock-brand-sub">× Odoo</div>
+          </div>
+          <div class="mock-nav-head">🚗 차량말소</div>
+          <div class="mock-nav-item">말소 입력</div>
+          <div class="mock-nav-item">말소 조회</div>
+          <div class="mock-nav-head">📄 면장(통관)</div>
+          <div class="mock-nav-item on">면장 조회</div>
+          <div class="mock-nav-item">면장 현황</div>
+          <div class="mock-nav-head">💰 청구서</div>
+          <div class="mock-nav-item">면장 청구 현황</div>
+          <div class="mock-nav-head">📊 빅데이터</div>
+          <div class="mock-nav-item">빅데이터 추출</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-topbar">
+            <div class="mock-page-title">📄 면장 조회</div>
+            <button class="mock-btn">+ 면장 입력</button>
+          </div>
+          <div class="mock-alert-box">
+            <div class="mock-alert-item">
+              <div class="mock-alert-icon" style="background:#FFF7ED">⏰</div>
+              <div><div class="mock-alert-num" style="color:#d97706">2건</div><div class="mock-alert-label">3일+ 미제출 · 작성 후 제출 안 된 건</div></div>
+            </div>
+            <div class="mock-alert-item">
+              <div class="mock-alert-icon" style="background:#EFF6FF">✈️</div>
+              <div><div class="mock-alert-num" style="color:var(--blue)">1건</div><div class="mock-alert-label">제출 가능 · AI 완료, 서류 준비됨</div></div>
+            </div>
+            <div class="mock-alert-item">
+              <div class="mock-alert-icon" style="background:#F5F3FF">⌛</div>
+              <div><div class="mock-alert-num" style="color:#7c3aed">2건</div><div class="mock-alert-label">승인 대기 중 · 제출 완료, 관세팀 확인 대기</div></div>
+            </div>
+          </div>
+          <div class="mock-searchbar">🔍 면장번호, 차대번호, 업체명, 초성 검색...</div>
+          <div class="mock-filters">
+            <div class="mock-filter">전체 타입 ▾</div>
+            <div class="mock-filter">전체 기간 ▾</div>
+          </div>
+          <div class="mock-status-row">
+            <span class="mst on">내 담당 <span class="cnt">8</span></span>
+            <span class="mst">전체 <span class="cnt">139</span></span>
+            <span class="mst">처리필요 <span class="cnt">40</span></span>
+            <span class="mst">작성중 <span class="cnt">46</span></span>
+            <span class="mst">제출완료 <span class="cnt">12</span></span>
+            <span class="mst">승인 <span class="cnt">81</span></span>
+            <span class="mst">반려 <span class="cnt">0</span></span>
+          </div>
+          <div class="mock-table">
+            <div class="mock-thead" style="grid-template-columns:130px 80px 70px 80px 60px 80px 70px 80px 70px">
+              <span>신고서</span><span>업체</span><span>차량수</span><span>수출타입</span><span>컨테이너</span><span>목적지</span><span>금액</span><span>AI분석</span><span>상태</span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:130px 80px 70px 80px 60px 80px 70px 80px 70px">
+              <span style="font-weight:600">면장-260225-002</span><span>HANEX</span><span style="text-align:center">1</span><span><span class="tag t-roro">RO-RO</span></span><span>-</span><span>-</span><span>0 KRW</span><span><span class="tag" style="background:#f5f3ff;color:#7c3aed">대기</span></span><span><span class="tag t-wait">작성중</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:130px 80px 70px 80px 60px 80px 70px 80px 70px">
+              <span style="font-weight:600">면장-260225-001</span><span>NUR AUTO</span><span style="text-align:center">1</span><span><span class="tag t-roro">RO-RO</span></span><span>-</span><span>Aruba</span><span>0 KRW</span><span><span class="tag" style="background:#f5f3ff;color:#7c3aed">대기</span></span><span><span class="tag t-wait">작성중</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:130px 80px 70px 80px 60px 80px 70px 80px 70px">
+              <span style="font-weight:600">면장-260224-015</span><span>ZAMA AUTO</span><span style="text-align:center">3</span><span><span class="tag t-roro">RO-RO</span></span><span>CSNU123</span><span>Kyrgyzstan</span><span>$4,200</span><span><span class="tag t-done">완료</span></span><span><span class="tag t-done">승인</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 면장 현황 -->
+      <div class="screen-panel" id="tab-status">
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-top">
+            <div class="mock-brand"><div class="mock-brand-ico">🚗</div> ILOAD Export</div>
+            <div class="mock-brand-sub">× Odoo</div>
+          </div>
+          <div class="mock-nav-head">🚗 차량말소</div>
+          <div class="mock-nav-item">말소 조회</div>
+          <div class="mock-nav-item">말소 현황</div>
+          <div class="mock-nav-head">📄 면장(통관)</div>
+          <div class="mock-nav-item">면장 조회</div>
+          <div class="mock-nav-item on">면장 현황</div>
+          <div class="mock-nav-head">💰 청구서</div>
+          <div class="mock-nav-item">면장 청구 현황</div>
+          <div class="mock-nav-head">📊 빅데이터</div>
+          <div class="mock-nav-item">빅데이터 추출</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-topbar">
+            <div class="mock-page-title">📄 면장 현황</div>
+            <button class="mock-btn gray">📥 엑셀 다운로드</button>
+          </div>
+          <div class="mock-filters" style="flex-wrap:wrap;gap:8px;margin-bottom:14px">
+            <div class="mock-filter">업체 검색 (초성 가능)</div>
+            <div class="mock-filter">년도: 2026</div>
+            <div class="mock-filter">수출타입: 전체 타입</div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <span style="background:#1a5fd4;color:#fff;font-size:11px;padding:5px 12px;border-radius:3px;font-weight:700">2월</span>
+              <span style="font-size:11px;color:#aaa">1월 3월 4월 5월 6월 7월 8월 9월 10월 11월 12월 전체</span>
+            </div>
+          </div>
+          <div class="mock-stats">
+            <div class="mstat blue"><div class="mstat-label">총 면장 건수</div><div class="mstat-num blue">135 건</div></div>
+            <div class="mstat teal"><div class="mstat-label">총 차량수</div><div class="mstat-num teal">86 대</div></div>
+            <div class="mstat green"><div class="mstat-label">승인 완료</div><div class="mstat-num green">81 건</div></div>
+            <div class="mstat orange"><div class="mstat-label">제출 대기</div><div class="mstat-num orange">39 건</div></div>
+            <div class="mstat red"><div class="mstat-label">총 금액</div><div class="mstat-num" style="font-size:13px;color:#e53e3e;font-weight:800">$36.9B</div></div>
+          </div>
+          <div style="display:flex;gap:16px;margin-bottom:14px">
+            <div style="background:#fff;border:1px solid #e8eaf0;border-radius:6px;padding:12px 16px;flex:1">
+              <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:8px">🚢 수출 타입</div>
+              <div style="display:flex;gap:8px"><span class="tag t-roro">RO-RO 62건</span><span class="tag t-container">컨테이너 73건</span></div>
+            </div>
+            <div style="background:#fff;border:1px solid #e8eaf0;border-radius:6px;padding:12px 16px;flex:2">
+              <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:8px">🌍 목적지</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <span style="background:#f0f2f7;color:#666;font-size:11px;padding:3px 8px;border-radius:2px">미지정 113</span>
+                <span style="background:#e0f2fe;color:#0369a1;font-size:11px;padding:3px 8px;border-radius:2px">Kyrgyzstan 10</span>
+                <span style="background:#fce7f3;color:#9d174d;font-size:11px;padding:3px 8px;border-radius:2px">Russian Federation 7</span>
+                <span style="background:#ecfdf5;color:#065f46;font-size:11px;padding:3px 8px;border-radius:2px">Saudi Arabia 3</span>
+                <span style="background:#fef3c7;color:#92400e;font-size:11px;padding:3px 8px;border-radius:2px">Oman 1</span>
+              </div>
+            </div>
+          </div>
+          <div class="mock-table">
+            <div class="mock-thead" style="grid-template-columns:30px 90px 100px 70px 80px 90px 50px 80px 80px 60px 60px">
+              <span>No</span><span>신청일</span><span>신고서</span><span>업체</span><span>차량수</span><span>수출타입</span><span>컨테이너</span><span>출발지</span><span>목적지</span><span>금액</span><span>상태</span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:30px 90px 100px 70px 80px 80px 50px 80px 80px 60px 60px">
+              <span>1</span><span style="font-size:11px">2026-02-25</span><span style="font-weight:600;font-size:11px">면장-260225-002</span><span>HANEX</span><span style="text-align:center">1</span><span><span class="tag t-roro">RO-RO</span></span><span>-</span><span>BUSAN</span><span>-</span><span>0</span><span><span class="tag t-wait">작성중</span></span>
+            </div>
+            <div class="mock-trow" style="grid-template-columns:30px 90px 100px 70px 80px 80px 50px 80px 80px 60px 60px">
+              <span>2</span><span style="font-size:11px">2026-02-24</span><span style="font-weight:600;font-size:11px">면장-260224-015</span><span>ZAMA</span><span style="text-align:center">3</span><span><span class="tag t-roro">RO-RO</span></span><span>CSNU</span><span>INCHEON</span><span>Kyrgyzstan</span><span>$4,200</span><span><span class="tag t-done">승인</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 면장 청구 현황 -->
+      <div class="screen-panel" id="tab-billing">
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-top">
+            <div class="mock-brand"><div class="mock-brand-ico">🚗</div> ILOAD Export</div>
+            <div class="mock-brand-sub">× Odoo</div>
+          </div>
+          <div class="mock-nav-head">🚗 차량말소</div>
+          <div class="mock-nav-item">말소 조회</div>
+          <div class="mock-nav-item">말소 현황</div>
+          <div class="mock-nav-head">📄 면장(통관)</div>
+          <div class="mock-nav-item">면장 조회</div>
+          <div class="mock-nav-head">💰 청구서</div>
+          <div class="mock-nav-item on">면장 청구 현황</div>
+          <div class="mock-nav-head">📊 빅데이터</div>
+          <div class="mock-nav-item">빅데이터 추출</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-topbar">
+            <div class="mock-page-title">💰 면장 청구 현황</div>
+            <div class="mock-btn-row">
+              <button class="mock-btn dark">↓ 월별 추이</button>
+              <button class="mock-btn">⚡ 일괄 청구 생성</button>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center">
+            <div style="font-size:13px;font-weight:700;color:#444">2026년</div>
+            <div style="display:flex;gap:4px">
+              <span style="background:#1a5fd4;color:#fff;font-size:11px;padding:4px 10px;border-radius:3px;font-weight:700;cursor:pointer">2월</span>
+              <span style="background:#f0f2f7;color:#666;font-size:11px;padding:4px 10px;border-radius:3px;cursor:pointer">1월</span>
+              <span style="background:#f0f2f7;color:#666;font-size:11px;padding:4px 10px;border-radius:3px;cursor:pointer">3월</span>
+            </div>
+            <input class="mock-input" type="text" placeholder="거래처 검색..." style="border:1px solid #dde2ec;border-radius:4px;padding:5px 10px;font-size:12px;color:#666;width:160px">
+          </div>
+          <div class="mock-stats" style="grid-template-columns:repeat(4,1fr)">
+            <div class="mstat blue"><div class="mstat-label">2월 총 청구금액</div><div class="mstat-num blue" style="font-size:16px">110,180원</div></div>
+            <div class="mstat green"><div class="mstat-label">2월 총 입금액</div><div class="mstat-num green" style="font-size:16px">0원</div></div>
+            <div class="mstat red"><div class="mstat-label">2월 총 미수금</div><div class="mstat-num red" style="font-size:16px">410,180원</div></div>
+            <div class="mstat orange"><div class="mstat-label">업체 수</div><div class="mstat-num orange">13개</div></div>
+          </div>
+          <div class="mock-status-row">
+            <span class="mst on">전체 <span class="cnt">13</span></span>
+            <span class="mst">미청구 <span class="cnt">0</span></span>
+            <span class="mst">임시 <span class="cnt">6</span></span>
+            <span class="mst">청구완료 <span class="cnt">4</span></span>
+            <span class="mst">입금완료 <span class="cnt">3</span></span>
+            <span class="mst" style="color:#e53e3e">미수금 410,180원</span>
+          </div>
+          <div class="bill-cards">
+            <div class="bill-card">
+              <div class="bill-card-top">
+                <div class="bill-company">고카라이프 <span class="tag t-wait">임시</span> 10건</div>
+                <div><span class="bill-amount">11,960원</span> <span class="bill-unpaid">미수금 311,960원</span></div>
+              </div>
+              <div class="bill-btns">
+                <button class="bill-btn bb-green">✓ 청구 처리</button>
+                <button class="bill-btn bb-kakao">📋 카톡 복사</button>
+                <button class="bill-btn bb-excel">📊 엑셀</button>
+              </div>
+            </div>
+            <div class="bill-card">
+              <div class="bill-card-top">
+                <div class="bill-company">무역 IMPEX(임팩스) <span class="tag t-done">청구완료</span> 6건</div>
+                <div><span class="bill-amount">9,330원</span> <span class="bill-unpaid">미수금 9,330원</span></div>
+              </div>
+              <div class="bill-btns">
+                <button class="bill-btn bb-green">💰 입금 확인</button>
+                <button class="bill-btn bb-kakao">📋 카톡 복사</button>
+                <button class="bill-btn bb-excel">📊 엑셀</button>
+              </div>
+            </div>
+            <div class="bill-card">
+              <div class="bill-card-top">
+                <div class="bill-company">브이케이 카 <span class="tag t-wait">임시</span> 3건</div>
+                <div><span class="bill-amount">4,040원</span> <span class="bill-unpaid">미수금 4,040원</span></div>
+              </div>
+              <div class="bill-btns">
+                <button class="bill-btn bb-green">✓ 청구 처리</button>
+                <button class="bill-btn bb-kakao">📋 카톡 복사</button>
+                <button class="bill-btn bb-excel">📊 엑셀</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 빅데이터 분석 -->
+      <div class="screen-panel" id="tab-bigdata">
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-top">
+            <div class="mock-brand"><div class="mock-brand-ico">🚗</div> ILOAD Export</div>
+            <div class="mock-brand-sub">× Odoo</div>
+          </div>
+          <div class="mock-nav-head">🚗 차량말소</div>
+          <div class="mock-nav-item">말소 조회</div>
+          <div class="mock-nav-head">📄 면장(통관)</div>
+          <div class="mock-nav-item">면장 조회</div>
+          <div class="mock-nav-item">면장 현황</div>
+          <div class="mock-nav-head">💰 청구서</div>
+          <div class="mock-nav-item">면장 청구 현황</div>
+          <div class="mock-nav-head">📊 빅데이터</div>
+          <div class="mock-nav-item on">빅데이터 추출</div>
+          <div class="mock-nav-head">👥 인사관리</div>
+          <div class="mock-nav-item">HR 대시보드</div>
+          <div class="mock-nav-item">근태 관리</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-topbar">
+            <div class="mock-page-title">📊 빅데이터 분석</div>
+            <div class="mock-btn-row">
+              <button class="mock-btn gray">🔍 검색</button>
+              <button class="mock-btn bb-excel" style="background:#217346;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;padding:6px 12px;border-radius:4px;font-size:11px;font-weight:700;color:#fff">📊 엑셀</button>
+              <button class="mock-btn" style="background:#dd6b20">⊞ 피벗</button>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
+            <span style="font-size:12px;color:#666">기간:</span>
+            <input style="border:1px solid #dde2ec;border-radius:3px;padding:5px 8px;font-size:11px;color:#666" value="2025.01.01">
+            <span style="color:#aaa">~</span>
+            <input style="border:1px solid #dde2ec;border-radius:3px;padding:5px 8px;font-size:11px;color:#666" value="2026.02.25">
+            <select style="border:1px solid #dde2ec;border-radius:3px;padding:5px 8px;font-size:11px;color:#666"><option>전체</option></select>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+            <span style="background:#1a5fd4;color:#fff;font-size:11px;padding:5px 12px;border-radius:3px;font-weight:700">전체</span>
+            <span style="background:#f0f2f7;color:#666;font-size:11px;padding:5px 12px;border-radius:3px;cursor:pointer">국가별</span>
+            <span style="background:#f0f2f7;color:#666;font-size:11px;padding:5px 12px;border-radius:3px;cursor:pointer">차종별</span>
+            <span style="background:#f0f2f7;color:#666;font-size:11px;padding:5px 12px;border-radius:3px;cursor:pointer">월별</span>
+            <span style="background:#f0f2f7;color:#666;font-size:11px;padding:5px 12px;border-radius:3px;cursor:pointer">연식</span>
+            <span style="background:#f0f2f7;color:#666;font-size:11px;padding:5px 12px;border-radius:3px;cursor:pointer">배기량</span>
+            <span style="background:#f0f2f7;color:#666;font-size:11px;padding:5px 12px;border-radius:3px;cursor:pointer">가격대</span>
+            <span style="margin-left:auto;font-size:11px;color:#888">총 4,159건 ·</span>
+          </div>
+          <div class="bd-table">
+            <div class="bd-thead" style="grid-template-columns:30px 1fr 80px 120px 80px 60px 80px 90px 80px 80px 40px">
+              <span>순번</span><span>차량명</span><span>차량번호</span><span>차대번호</span><span>최초등록일</span><span>제작연식</span><span>수출국가</span><span>차량수출금액</span><span>주유구분</span><span>배기량</span><span>인승</span>
+            </div>
+            <div class="bd-row" style="grid-template-columns:30px 1fr 80px 120px 80px 60px 80px 90px 80px 80px 40px">
+              <span>1</span><span style="font-weight:600">K5</span><span>****0510</span><span style="font-size:10px">**********2455</span><span>2016-08-18</span><span>2017</span><span>AZER</span><span style="color:var(--blue);font-weight:600">12,000,000</span><span>휘발유</span><span>1,999</span><span>5</span>
+            </div>
+            <div class="bd-row" style="grid-template-columns:30px 1fr 80px 120px 80px 60px 80px 90px 80px 80px 40px">
+              <span>2</span><span style="font-weight:600">QM6</span><span>****1927</span><span style="font-size:10px">**********6118</span><span>-</span><span>2020</span><span>키르기스스탄</span><span style="color:var(--blue);font-weight:600">6,400,000</span><span>엘피지</span><span>1,998</span><span>5</span>
+            </div>
+            <div class="bd-row" style="grid-template-columns:30px 1fr 80px 120px 80px 60px 80px 90px 80px 80px 40px">
+              <span>3</span><span style="font-weight:600">Peugeot 3008 BlueHDi</span><span>****3244</span><span style="font-size:10px">**********7266</span><span>-</span><span>2018</span><span>카자흐스탄</span><span style="color:var(--blue);font-weight:600">75,000,000</span><span>경유</span><span>1,560</span><span>5</span>
+            </div>
+            <div class="bd-row" style="grid-template-columns:30px 1fr 80px 120px 80px 60px 80px 90px 80px 80px 40px">
+              <span>4</span><span style="font-weight:600">니로 하이브리드</span><span>****6769</span><span style="font-size:10px">**********8031</span><span>-</span><span>2022</span><span>UZBEK</span><span style="color:var(--blue);font-weight:600">32,740,000</span><span>하이브리드</span><span>1,580</span><span>5</span>
+            </div>
+            <div class="bd-row" style="grid-template-columns:30px 1fr 80px 120px 80px 60px 80px 90px 80px 80px 40px">
+              <span>5</span><span style="font-weight:600">포터 II 내장탑차</span><span>****0837</span><span style="font-size:10px">**********4831</span><span>-</span><span>2019</span><span>KYRGY</span><span style="color:var(--blue);font-weight:600">14,040,000</span><span>경유</span><span>2,497</span><span>3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFIT -->
+<section class="benefit-section">
+  <div class="container">
+    <div class="sec-tag">WHY LANDING LOAD</div>
+    <h2 class="sec-title" style="color:#fff">도입 효과</h2>
+    <p class="sec-desc">실제 중고차 수출 무역업체 운영 데이터 기반으로 설계한 시스템입니다.</p>
+    <div class="benefit-grid">
+      <div class="benefit-card">
+        <div class="benefit-num">4,159<span>+</span></div>
+        <div class="benefit-label">실 운영 데이터</div>
+        <div class="benefit-desc">실제 수출 차량 데이터를 빅데이터로 분석·관리</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-num">$36.9<span>B</span></div>
+        <div class="benefit-label">처리 거래 규모</div>
+        <div class="benefit-desc">면장 기준 누적 수출 총액 관리 실적</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-num">AI<span>자동</span></div>
+        <div class="benefit-label">서류 자동 분류</div>
+        <div class="benefit-desc">PDF 업로드 → AI가 차량별 서류 자동 분류·그룹핑</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-num">3<span>주</span></div>
+        <div class="benefit-label">도입 완료</div>
+        <div class="benefit-desc">기획 확정 후 평균 3주 내 운영 시작 가능</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLY -->
+<section class="apply-section" id="apply">
+  <div class="container">
+    <div class="sec-tag">CONTACT</div>
+    <h2 class="sec-title">중고차 수출 ERP 도입 상담</h2>
+    <p class="sec-desc">무료 상담을 통해 우리 업체에 맞는 구성을 확인하세요.</p>
+    <div class="apply-layout">
+      <div class="apply-info">
+        <h3>이런 업체에 적합합니다</h3>
+        <p>말소·면장·청구서를 엑셀로 관리하고 있는 무역업체, 서류 누락·지연으로 어려움을 겪는 수출업체, 빅데이터로 수출 현황을 분석하고 싶은 업체라면 최적의 솔루션입니다.</p>
+        <div class="apply-contact">
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div><div class="contact-label">전화 상담</div><div class="contact-val">1668-1653</div></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">⏰</div>
+            <div><div class="contact-label">운영 시간</div><div class="contact-val">평일 09:00 ~ 18:00</div></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">💬</div>
+            <div><div class="contact-label">빠른 상담</div><div class="contact-val">실시간 채팅 상담 가능</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="apply-form">
+        <h3>무료 상담 신청</h3>
+        <div class="form-row">
+          <label class="form-label">회사명 <span class="req">*</span></label>
+          <input class="form-input" type="text" placeholder="업체명을 입력해주세요.">
+        </div>
+        <div class="form-row">
+          <label class="form-label">담당자명 <span class="req">*</span></label>
+          <input class="form-input" type="text" placeholder="담당자 성함">
+        </div>
+        <div class="form-row">
+          <label class="form-label">연락처 <span class="req">*</span></label>
+          <input class="form-input" type="text" placeholder="010-XXXX-XXXX">
+        </div>
+        <div class="form-row">
+          <label class="form-label">주요 관심 기능</label>
+          <div class="form-radio-group">
+            <label class="form-radio"><input type="checkbox"> 차량말소</label>
+            <label class="form-radio"><input type="checkbox"> 면장관리</label>
+            <label class="form-radio"><input type="checkbox"> AI 서류자동화</label>
+            <label class="form-radio"><input type="checkbox"> 청구서</label>
+            <label class="form-radio"><input type="checkbox"> 빅데이터분석</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">상세 문의사항</label>
+          <textarea class="form-input" rows="3" placeholder="현재 불편한 점, 원하는 기능 등을 자유롭게 입력해주세요."></textarea>
+        </div>
+        <div class="form-agree"><input type="checkbox" id="agree"><label for="agree">개인정보 수집 및 이용에 동의합니다.</label></div>
+        <button class="form-submit">무료 상담 신청하기</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-brand">Landing Load</div>
+  <div class="footer-phone">1668-1653</div>
+  <div class="footer-copy">© 2024 Landing Load Korea. All rights reserved.</div>
+</footer>
+
+<script>
+function switchTab(id, el) {
+  document.querySelectorAll('.stab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.screen-panel').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById(id).classList.add('on');
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>

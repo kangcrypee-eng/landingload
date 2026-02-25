@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landing Load — 홈페이지 분양서비스 소개</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a1628;
+  --blue: #1a5fd4;
+  --gold: #F5A623;
+  --mint: #00c9a7;
+  --light: #f0f4ff;
+  --white: #ffffff;
+  --muted: rgba(255,255,255,0.5);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #000;
+  overflow: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed; z-index: 9999;
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(245,166,35,0.4);
+  border-radius: 50%;
+  position: fixed; z-index: 9998;
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+  transition: all 0.18s ease;
+}
+
+/* ── DECK WRAPPER ── */
+.deck {
+  width: 100vw; height: 100vh;
+  position: relative; overflow: hidden;
+}
+
+/* ── SLIDES ── */
+.slide {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* progress bar */
+.progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--gold);
+  z-index: 100;
+  transition: width 0.5s ease;
+}
+
+/* slide counter */
+.counter {
+  position: fixed; bottom: 28px; right: 40px;
+  font-size: 12px; color: rgba(255,255,255,0.3);
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 1px; z-index: 100;
+}
+.counter span { color: rgba(255,255,255,0.7); font-weight: 700; }
+
+/* nav arrows */
+.nav-btn {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: rgba(255,255,255,0.4);
+  z-index: 100; transition: all 0.2s;
+  user-select: none;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.nav-prev { left: 20px; }
+.nav-next { right: 20px; }
+
+/* ── SCRIPT PANEL ── */
+
+
+/* ════════════════════════════════
+   SLIDE 1 — COVER
+════════════════════════════════ */
+#s1 {
+  background: var(--navy);
+  align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+#s1 .bg-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(26,95,212,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,95,212,0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+#s1 .bg-glow {
+  position: absolute; width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(26,95,212,0.2) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+}
+#s1 .content {
+  position: relative; z-index: 2; text-align: center;
+  animation: fadeUp 0.8s ease both;
+}
+#s1 .eyebrow {
+  font-size: 12px; letter-spacing: 3px; font-weight: 700;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+#s1 .eyebrow::before, #s1 .eyebrow::after {
+  content: ''; width: 40px; height: 1px; background: var(--gold); opacity: 0.5;
+}
+#s1 h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 800; color: #fff; line-height: 0.95;
+  letter-spacing: -1px; margin-bottom: 32px;
+}
+#s1 h1 .hl { color: var(--gold); }
+#s1 .sub {
+  font-size: 18px; color: rgba(255,255,255,0.5);
+  margin-bottom: 48px; line-height: 1.6;
+}
+#s1 .tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+#s1 .tag {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6); font-size: 13px;
+  padding: 7px 18px; border-radius: 100px;
+}
+#s1 .tag.gold { border-color: rgba(245,166,35,0.4); color: var(--gold); background: rgba(245,166,35,0.08); }
+
+/* ════════════════════════════════
+   SLIDE 2 — PROBLEM
+════════════════════════════════ */
+#s2 { background: #0d1a2e; align-items: center; justify-content: center; }
+#s2 .inner { max-width: 1100px; width: 90%; }
+#s2 .slide-label { font-size:11px; letter-spacing:3px; color:var(--gold); font-weight:700; text-transform:uppercase; margin-bottom:16px; }
+#s2 h2 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(36px,5vw,62px); font-weight:800; color:#fff; line-height:1.05; margin-bottom:48px; }
+#s2 h2 em { color:var(--gold); font-style:normal; }
+#s2 .problems { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+#s2 .prob-card {
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:12px; padding:28px 24px;
+  position:relative; overflow:hidden;
+  transition: transform 0.3s;
+}
+#s2 .prob-card:hover { transform: translateY(-4px); }
+#s2 .prob-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, #e53e3e, transparent);
+}
+#s2 .prob-num { font-family:'Barlow Condensed',sans-serif; font-size:64px; font-weight:800; color:rgba(229,62,62,0.12); line-height:1; margin-bottom:8px; }
+#s2 .prob-title { font-size:16px; font-weight:700; color:#fff; margin-bottom:8px; }
+#s2 .prob-desc { font-size:13px; color:rgba(255,255,255,0.45); line-height:1.7; }
+#s2 .prob-card .icon { font-size:28px; margin-bottom:12px; display:block; }
+
+/* ════════════════════════════════
+   SLIDE 3 — SOLUTION
+════════════════════════════════ */
+#s3 {
+  background:linear-gradient(135deg, #0a1628 0%, #0d3060 100%);
+  align-items:center; justify-content:center;
+}
+#s3 .inner { max-width:1100px; width:90%; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+#s3 .left .slide-label { font-size:11px; letter-spacing:3px; color:var(--mint); font-weight:700; text-transform:uppercase; margin-bottom:16px; }
+#s3 .left h2 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(36px,5vw,62px); font-weight:800; color:#fff; line-height:1.05; margin-bottom:24px; }
+#s3 .left h2 em { color:var(--mint); font-style:normal; }
+#s3 .left p { font-size:16px; color:rgba(255,255,255,0.55); line-height:1.75; margin-bottom:32px; }
+#s3 .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+#s3 .stat { text-align:center; }
+#s3 .stat-num { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:800; color:var(--gold); line-height:1; }
+#s3 .stat-num sup { font-size:24px; }
+#s3 .stat-label { font-size:12px; color:rgba(255,255,255,0.4); margin-top:4px; }
+#s3 .right { display:flex; flex-direction:column; gap:16px; }
+#s3 .sol-item {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  border-radius:10px; padding:20px 22px;
+  display:flex; align-items:center; gap:16px;
+  transition: all 0.3s;
+}
+#s3 .sol-item:hover { background:rgba(26,95,212,0.12); border-color:rgba(26,95,212,0.3); }
+#s3 .sol-icon { font-size:28px; flex-shrink:0; }
+#s3 .sol-title { font-size:15px; font-weight:700; color:#fff; margin-bottom:3px; }
+#s3 .sol-desc { font-size:12px; color:rgba(255,255,255,0.45); }
+
+/* ════════════════════════════════
+   SLIDE 4 — SERVICE 1: 무역업체
+════════════════════════════════ */
+#s4 { background:#050d1a; align-items:center; justify-content:center; }
+#s4 .inner { max-width:1100px; width:90%; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+.svc-label { font-size:11px; letter-spacing:3px; font-weight:700; text-transform:uppercase; margin-bottom:12px; }
+.svc-eyebrow { font-size:13px; color:rgba(255,255,255,0.4); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.svc-num { font-family:'Barlow Condensed',sans-serif; font-size:80px; font-weight:800; color:rgba(255,255,255,0.04); line-height:1; position:absolute; top:-10px; right:0; }
+.svc-title { font-family:'Barlow Condensed',sans-serif; font-size:clamp(32px,4.5vw,54px); font-weight:800; color:#fff; line-height:1.05; margin-bottom:16px; position:relative; }
+.svc-desc { font-size:14px; color:rgba(255,255,255,0.5); line-height:1.75; margin-bottom:24px; }
+.svc-feats { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.svc-feats li { display:flex; align-items:flex-start; gap:10px; font-size:13px; color:rgba(255,255,255,0.7); }
+.svc-feats li::before { content:'→'; color:var(--gold); font-weight:700; flex-shrink:0; margin-top:1px; }
+
+/* mock screen right */
+.mock-screen {
+  border-radius:12px; overflow:hidden;
+  border:1px solid rgba(255,255,255,0.1);
+  background:#111c2e;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+.mock-topbar-screen {
+  background:#0d1525; padding:10px 16px;
+  display:flex; align-items:center; gap:6px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.mdot { width:9px; height:9px; border-radius:50%; }
+.mock-label { font-size:10px; color:rgba(255,255,255,0.2); margin-left:8px; }
+.mock-sidebar-mini { display:grid; grid-template-columns:150px 1fr; min-height:280px; }
+.msb { background:#0a1220; padding:12px 0; border-right:1px solid rgba(255,255,255,0.05); }
+.msb-head { padding:5px 12px 2px; font-size:9px; font-weight:700; color:rgba(255,255,255,0.25); letter-spacing:.5px; text-transform:uppercase; }
+.msb-item { padding:5px 12px 5px 20px; font-size:11px; color:rgba(255,255,255,0.4); }
+.msb-item.on { background:rgba(26,95,212,0.2); color:#fff; border-left:2px solid var(--blue); padding-left:18px; }
+.mc { padding:14px; }
+.mc-title { font-size:12px; font-weight:700; color:#fff; margin-bottom:10px; }
+.mc-kpi { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:10px; }
+.mc-kpi-card { background:rgba(255,255,255,0.04); border-radius:5px; padding:8px; text-align:center; }
+.mc-kpi-num { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; }
+.mc-kpi-label { font-size:9px; color:rgba(255,255,255,0.3); margin-top:1px; }
+.mc-row { display:grid; gap:6px; padding:5px 6px; border-bottom:1px solid rgba(255,255,255,0.04); align-items:center; }
+.mc-row span { font-size:10px; color:rgba(255,255,255,0.55); }
+.mc-head { background:rgba(255,255,255,0.04); border-radius:3px; }
+.mc-head span { color:rgba(255,255,255,0.25) !important; font-weight:700; font-size:9px !important; }
+.mb { display:inline-block; padding:1px 6px; border-radius:2px; font-size:9px; font-weight:700; }
+.mb-roro { background:rgba(26,95,212,0.25); color:#7db3ff; }
+.mb-new { background:rgba(245,166,35,0.2); color:var(--gold); }
+.mb-done { background:rgba(0,201,167,0.2); color:var(--mint); }
+.mb-proc { background:rgba(109,63,200,0.2); color:#c4b5fd; }
+.mb-customs { background:rgba(0,201,167,0.15); color:var(--mint); }
+
+/* ════════════════════════════════
+   SLIDE 5 — SERVICE 2: 쇼링장
+════════════════════════════════ */
+#s5 { background:#050d1a; align-items:center; justify-content:center; }
+#s5 .inner { max-width:1100px; width:90%; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+
+/* ════════════════════════════════
+   SLIDE 6 — SERVICE 3: 관세사
+════════════════════════════════ */
+#s6 { background:#05080f; align-items:center; justify-content:center; }
+#s6 .inner { max-width:1100px; width:90%; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+
+/* ════════════════════════════════
+   SLIDE 7 — COMPARISON
+════════════════════════════════ */
+#s7 { background:#0a1628; align-items:center; justify-content:center; }
+#s7 .inner { max-width:980px; width:90%; }
+#s7 .slide-label { font-size:11px; letter-spacing:3px; color:var(--gold); font-weight:700; text-transform:uppercase; margin-bottom:16px; }
+#s7 h2 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(36px,5vw,58px); font-weight:800; color:#fff; line-height:1.05; margin-bottom:36px; }
+.cmp-table { width:100%; border-collapse:collapse; }
+.cmp-table th { padding:12px 20px; font-size:13px; font-weight:700; text-align:center; }
+.cmp-table th:first-child { text-align:left; color:rgba(255,255,255,0.35); font-weight:500; }
+.cmp-table th.ours { background:rgba(26,95,212,0.15); border-radius:8px 8px 0 0; color:#7db3ff; font-size:14px; }
+.cmp-table th.theirs { color:rgba(255,255,255,0.35); }
+.cmp-table td { padding:11px 20px; font-size:13px; border-bottom:1px solid rgba(255,255,255,0.05); }
+.cmp-table td:first-child { color:rgba(255,255,255,0.5); font-weight:500; }
+.cmp-table td.ours { background:rgba(26,95,212,0.06); text-align:center; color:#7db3ff; font-weight:700; }
+.cmp-table td.theirs { text-align:center; color:rgba(255,255,255,0.3); }
+.cmp-table tr:last-child td { border-bottom:none; }
+.cmp-table tr:hover td { background:rgba(255,255,255,0.02); }
+.cmp-table tr:hover td.ours { background:rgba(26,95,212,0.1); }
+
+/* ════════════════════════════════
+   SLIDE 8 — PROCESS
+════════════════════════════════ */
+#s8 { background:linear-gradient(135deg,#0a1628,#0d2850); align-items:center; justify-content:center; }
+#s8 .inner { max-width:1000px; width:90%; text-align:center; }
+#s8 .slide-label { font-size:11px; letter-spacing:3px; color:var(--mint); font-weight:700; text-transform:uppercase; margin-bottom:16px; }
+#s8 h2 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(36px,5vw,58px); font-weight:800; color:#fff; line-height:1.05; margin-bottom:12px; }
+#s8 .sub { font-size:15px; color:rgba(255,255,255,0.4); margin-bottom:48px; }
+.steps-flow { display:flex; align-items:flex-start; gap:0; position:relative; }
+.steps-flow::before { content:''; position:absolute; top:28px; left:28px; right:28px; height:1px; background:rgba(255,255,255,0.1); }
+.step-item { flex:1; position:relative; z-index:1; padding:0 8px; text-align:center; }
+.step-circle {
+  width:56px; height:56px; border-radius:50%;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 16px;
+  font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800;
+  color:rgba(255,255,255,0.4);
+  transition:all 0.3s;
+}
+.step-circle.gold { background:rgba(245,166,35,0.15); border-color:rgba(245,166,35,0.4); color:var(--gold); }
+.step-name { font-size:13px; font-weight:700; color:#fff; margin-bottom:6px; }
+.step-time { font-size:11px; color:rgba(255,255,255,0.35); }
+.step-desc { font-size:11px; color:rgba(255,255,255,0.3); line-height:1.5; margin-top:4px; }
+.step-badges { display:flex; justify-content:center; gap:8px; margin-top:32px; }
+.step-badge { background:rgba(245,166,35,0.1); border:1px solid rgba(245,166,35,0.25); color:var(--gold); font-size:12px; font-weight:600; padding:6px 16px; border-radius:100px; }
+
+/* ════════════════════════════════
+   SLIDE 9 — CTA
+════════════════════════════════ */
+#s9 {
+  background:var(--navy);
+  align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+}
+#s9 .bg-glow {
+  position:absolute; width:900px; height:900px;
+  background:radial-gradient(circle, rgba(26,95,212,0.15) 0%, transparent 70%);
+  top:50%; left:50%; transform:translate(-50%,-50%);
+}
+#s9 .bg-grid {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(26,95,212,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,95,212,0.06) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+#s9 .content { position:relative; z-index:2; text-align:center; max-width:700px; }
+#s9 .eyebrow { font-size:12px; letter-spacing:3px; font-weight:700; color:var(--mint); text-transform:uppercase; margin-bottom:24px; display:flex; align-items:center; justify-content:center; gap:12px; }
+#s9 .eyebrow::before, #s9 .eyebrow::after { content:''; width:40px; height:1px; background:var(--mint); opacity:0.4; }
+#s9 h2 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(40px,6vw,80px); font-weight:800; color:#fff; line-height:0.95; margin-bottom:20px; }
+#s9 h2 em { color:var(--gold); font-style:normal; }
+#s9 .sub { font-size:16px; color:rgba(255,255,255,0.45); margin-bottom:40px; line-height:1.6; }
+#s9 .phone {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(40px,6vw,72px); font-weight:800;
+  color:var(--gold); letter-spacing:2px; display:block; margin-bottom:12px;
+}
+#s9 .phone-note { font-size:13px; color:rgba(255,255,255,0.3); margin-bottom:32px; }
+#s9 .cta-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--blue); color:#fff;
+  font-weight:700; font-size:16px;
+  padding:15px 36px; border-radius:4px;
+  border:none; cursor:pointer;
+  transition:all 0.2s; font-family:'Noto Sans KR',sans-serif;
+}
+#s9 .cta-btn:hover { background:#1450bb; transform:translateY(-2px); box-shadow:0 12px 40px rgba(26,95,212,0.4); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.slide.active .anim { animation: fadeUp 0.6s ease both; }
+.slide.active .anim-1 { animation-delay:0.1s; }
+.slide.active .anim-2 { animation-delay:0.2s; }
+.slide.active .anim-3 { animation-delay:0.3s; }
+.slide.active .anim-4 { animation-delay:0.4s; }
+.slide.active .anim-5 { animation-delay:0.5s; }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="progress" id="progress"></div>
+<div class="counter"><span id="curNum">1</span> / 9</div>
+<button class="nav-btn nav-prev" onclick="prevSlide()">←</button>
+<button class="nav-btn nav-next" onclick="nextSlide()">→</button>
+
+
+<div class="deck">
+
+<!-- ═══ SLIDE 1 ═══ -->
+<div class="slide active" id="s1">
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <div class="content">
+    <div class="eyebrow">Landing Load Korea</div>
+    <h1>홈페이지 <span class="hl">분양서비스</span><br>소개</h1>
+    <p class="sub">업종 특화 ERP + 홈페이지를<br>3주 안에, 정찰가로 도입하세요.</p>
+    <div class="tags">
+      <span class="tag">🚗 중고차 수출 무역업체</span>
+      <span class="tag">🚢 쇼링장</span>
+      <span class="tag">📋 관세사</span>
+      <span class="tag gold">1668-1653</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2 ═══ -->
+<div class="slide" id="s2">
+  <div class="inner">
+    <div class="slide-label anim anim-1">THE PROBLEM</div>
+    <h2 class="anim anim-2">특수 업종이 겪는<br><em>3가지 공통 문제</em></h2>
+    <div class="problems">
+      <div class="prob-card anim anim-2">
+        <span class="icon">📋</span>
+        <div class="prob-num">01</div>
+        <div class="prob-title">엑셀·메모장 수작업</div>
+        <div class="prob-desc">중고차 수출, 쇼링장, 관세사 모두 아직도 엑셀로 면장·청구서·작업의뢰를 관리합니다.</div>
+      </div>
+      <div class="prob-card anim anim-3">
+        <span class="icon">💸</span>
+        <div class="prob-num">02</div>
+        <div class="prob-title">홈페이지 비용·기간 과다</div>
+        <div class="prob-desc">일반 제작사에 맡기면 수백~수천만 원에 2~3개월 소요. 업종을 모르는 사람이 만들어 완성도도 낮습니다.</div>
+      </div>
+      <div class="prob-card anim anim-4">
+        <span class="icon">🔧</span>
+        <div class="prob-num">03</div>
+        <div class="prob-title">런칭 후 방치</div>
+        <div class="prob-desc">만들고 나면 수정도, 관리도 안 됩니다. 추가 비용이 계속 발생하거나 그냥 방치됩니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3 ═══ -->
+<div class="slide" id="s3">
+  <div class="inner">
+    <div class="left">
+      <div class="slide-label anim anim-1">OUR SOLUTION</div>
+      <h2 class="anim anim-2">이미 검증된 시스템을<br><em>그대로 분양</em>합니다</h2>
+      <p class="anim anim-3">처음부터 만드는 게 아닙니다.<br>실제 운영 중인 업종별 ERP와 홈페이지를 분양받아<br>3주 만에 운영을 시작하세요.</p>
+      <div class="stats anim anim-4">
+        <div class="stat"><div class="stat-num">3<sup>주</sup></div><div class="stat-label">도입 완료</div></div>
+        <div class="stat"><div class="stat-num" style="font-size:36px">정찰제</div><div class="stat-label">투명한 고정가격</div></div>
+        <div class="stat"><div class="stat-num">24<sup>h</sup></div><div class="stat-label">착수 보장</div></div>
+      </div>
+    </div>
+    <div class="right anim anim-3">
+      <div class="sol-item">
+        <span class="sol-icon">🚗</span>
+        <div><div class="sol-title">중고차 수출 무역업체 ERP</div><div class="sol-desc">말소·면장·청구서·빅데이터 분석 — ILOAD Export 실운영 시스템</div></div>
+      </div>
+      <div class="sol-item">
+        <span class="sol-icon">🚢</span>
+        <div><div class="sol-title">쇼링장 특화 ERP</div><div class="sol-desc">작업의뢰·쇼링리스트·비품·경비·HR 올인원 통합 관리</div></div>
+      </div>
+      <div class="sol-item">
+        <span class="sol-icon">📋</span>
+        <div><div class="sol-title">관세사 전용 ERP</div><div class="sol-desc">일반면장·중고차면장·거래처·청구서 통관 전 과정 자동화</div></div>
+      </div>
+      <div class="sol-item" style="border-color:rgba(245,166,35,0.2);background:rgba(245,166,35,0.04)">
+        <span class="sol-icon">🏠</span>
+        <div><div class="sol-title" style="color:var(--gold)">홈페이지 분양</div><div class="sol-desc">업종별 전문 홈페이지 — 포트폴리오로 사전 확인 후 바로 신청</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4 — 무역업체 ═══ -->
+<div class="slide" id="s4">
+  <div class="inner">
+    <div style="position:relative">
+      <div class="svc-eyebrow anim anim-1">서비스 01 <span style="color:rgba(255,255,255,0.2)">|</span> 중고차 수출 분야</div>
+      <div class="svc-num">01</div>
+      <div class="svc-label anim anim-1" style="color:var(--gold)">무역업체 ERP</div>
+      <div class="svc-title anim anim-2">말소부터 빅데이터까지<br>수출 전 과정 자동화</div>
+      <p class="svc-desc anim anim-3">AI가 PDF를 자동 분류, 면장 관리, 청구서 발급.<br>실제 운영 중인 검증된 시스템을 그대로 분양받으세요.</p>
+      <ul class="svc-feats anim anim-4">
+        <li>AI 서류 자동 분류·그룹핑 (PDF 업로드 즉시)</li>
+        <li>면장 조회·현황 대시보드 (RO-RO / 컨테이너)</li>
+        <li>청구서 발급 및 입금 현황 관리</li>
+        <li>빅데이터 분석 — 국가별·차종별·연식별·가격대</li>
+        <li>마이페이지에서 메시지·서류·진행현황 통합 관리</li>
+      </ul>
+    </div>
+    <div class="mock-screen anim anim-3">
+      <div class="mock-topbar-screen">
+        <div class="mdot" style="background:#ff5f57"></div>
+        <div class="mdot" style="background:#ffbd2e"></div>
+        <div class="mdot" style="background:#28c840"></div>
+        <span class="mock-label">🚗 ILOAD Export · 말소 조회</span>
+      </div>
+      <div class="mock-sidebar-mini">
+        <div class="msb">
+          <div class="msb-head">차량말소</div>
+          <div class="msb-item on">말소 조회</div>
+          <div class="msb-item">말소 현황</div>
+          <div class="msb-head">면장(통관)</div>
+          <div class="msb-item">면장 조회</div>
+          <div class="msb-item">면장 현황</div>
+          <div class="msb-head">청구서</div>
+          <div class="msb-item">청구 현황</div>
+          <div class="msb-head">빅데이터</div>
+          <div class="msb-item">빅데이터 추출</div>
+          <div class="msb-head">인사관리</div>
+          <div class="msb-item">HR 대시보드</div>
+        </div>
+        <div class="mc">
+          <div class="mc-title">🚗 말소 조회 — 내 담당 10건</div>
+          <div class="mc-kpi">
+            <div class="mc-kpi-card"><div class="mc-kpi-num" style="color:#f87171">15</div><div class="mc-kpi-label">처리필요</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-num" style="color:var(--gold)">4</div><div class="mc-kpi-label">처리중</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-num" style="color:var(--mint)">2</div><div class="mc-kpi-label">완료</div></div>
+          </div>
+          <div class="mc-row mc-head" style="grid-template-columns:1fr 70px 60px 55px">
+            <span>차대번호</span><span>차종</span><span>서류</span><span>상태</span>
+          </div>
+          <div class="mc-row" style="grid-template-columns:1fr 70px 60px 55px">
+            <span style="font-size:9px;font-weight:600">KNAF241BENA936646</span><span>K3</span><span style="color:var(--blue)">4/4</span><span><span class="mb mb-proc">처리중</span></span>
+          </div>
+          <div class="mc-row" style="grid-template-columns:1fr 70px 60px 55px">
+            <span style="font-size:9px;font-weight:600">KMHLM41EEMU203731</span><span>AVANTE</span><span style="color:var(--blue)">4/4</span><span><span class="mb mb-proc">처리중</span></span>
+          </div>
+          <div class="mc-row" style="grid-template-columns:1fr 70px 60px 55px">
+            <span style="font-size:9px;font-weight:600">KNAGN419BFA604784</span><span>K5</span><span style="color:var(--mint)">4/4 ✓</span><span><span class="mb mb-done">완료</span></span>
+          </div>
+          <div style="margin-top:10px;background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);border-radius:5px;padding:8px 10px">
+            <div style="font-size:9px;font-weight:700;color:var(--gold);margin-bottom:3px">📊 빅데이터 분석</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.4)">국가별 · 차종별 · 연식별 · 가격대별 분석</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 5 — 쇼링장 ═══ -->
+<div class="slide" id="s5">
+  <div class="inner">
+    <div style="position:relative">
+      <div class="svc-eyebrow anim anim-1">서비스 02 <span style="color:rgba(255,255,255,0.2)">|</span> 중고차 수출 분야</div>
+      <div class="svc-num">02</div>
+      <div class="svc-label anim anim-1" style="color:var(--mint)">쇼링장 ERP</div>
+      <div class="svc-title anim anim-2">작업의뢰부터<br>청구까지 한 번에</div>
+      <p class="svc-desc anim anim-3">매일 쏟아지는 쇼링 오더를 체계적으로 관리.<br>쇼링리스트 자동 발급, 비품·경비·HR까지 올인원.</p>
+      <ul class="svc-feats anim anim-4">
+        <li>화주·포워딩·운송사·운전기사 일괄 등록</li>
+        <li>차대번호·컨테이너 구분(20/40/45ft) 관리</li>
+        <li>쇼링리스트 자동 발급 & 사진 정보 첨부</li>
+        <li>청구서 발급 → 입금 확인 → 세금계산서 처리</li>
+        <li>와이어·목재·아시바 비품 재고 + 지게차 경비</li>
+      </ul>
+    </div>
+    <div class="mock-screen anim anim-3">
+      <div class="mock-topbar-screen">
+        <div class="mdot" style="background:#ff5f57"></div>
+        <div class="mdot" style="background:#ffbd2e"></div>
+        <div class="mdot" style="background:#28c840"></div>
+        <span class="mock-label">🚢 쇼링장 ERP · 작업 조회</span>
+      </div>
+      <div class="mock-sidebar-mini">
+        <div class="msb">
+          <div class="msb-head">거래처</div>
+          <div class="msb-item">거래처 조회</div>
+          <div class="msb-item">협력사</div>
+          <div class="msb-head">작업의뢰</div>
+          <div class="msb-item on">작업 조회</div>
+          <div class="msb-item">작업 현황</div>
+          <div class="msb-item">쇼링리스트</div>
+          <div class="msb-head">청구서</div>
+          <div class="msb-item">청구서 관리</div>
+          <div class="msb-head">비품·경비</div>
+          <div class="msb-item">비품 관리</div>
+          <div class="msb-item">경비 관리</div>
+          <div class="msb-head">HR</div>
+          <div class="msb-item">근태 관리</div>
+        </div>
+        <div class="mc">
+          <div class="mc-title">🚢 작업 현황</div>
+          <div class="mc-kpi">
+            <div class="mc-kpi-card"><div class="mc-kpi-num" style="color:#7db3ff">12</div><div class="mc-kpi-label">이번주</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-num" style="color:var(--mint)">8</div><div class="mc-kpi-label">완료</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-num" style="color:var(--gold)">4</div><div class="mc-kpi-label">진행중</div></div>
+          </div>
+          <div class="mc-row mc-head" style="grid-template-columns:50px 1fr 55px 50px">
+            <span>접수일</span><span>화주·차량</span><span>컨테이너</span><span>상태</span>
+          </div>
+          <div class="mc-row" style="grid-template-columns:50px 1fr 55px 50px">
+            <span>02-24</span><span style="font-size:9px">HANEX<br><span style="color:rgba(255,255,255,0.3)">KNAG241...</span></span><span style="font-size:9px">40ft</span><span><span class="mb mb-new">진행중</span></span>
+          </div>
+          <div class="mc-row" style="grid-template-columns:50px 1fr 55px 50px">
+            <span>02-24</span><span style="font-size:9px">NUR AUTO<br><span style="color:rgba(255,255,255,0.3)">KNAG241...</span></span><span style="font-size:9px">20ft</span><span><span class="mb mb-proc">사진확보</span></span>
+          </div>
+          <div class="mc-row" style="grid-template-columns:50px 1fr 55px 50px">
+            <span>02-23</span><span style="font-size:9px">ZAMA AUTO<br><span style="color:rgba(255,255,255,0.3)">W1NFD2...</span></span><span style="font-size:9px">40ft</span><span><span class="mb mb-done">완료</span></span>
+          </div>
+          <div style="margin-top:10px;background:rgba(0,201,167,0.06);border:1px solid rgba(0,201,167,0.15);border-radius:5px;padding:8px 10px">
+            <div style="font-size:9px;font-weight:700;color:var(--mint);margin-bottom:3px">📦 비품 현황</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.4)">와이어 잔여 42개 · 목재 15개 · 아시바 8개</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 6 — 관세사 ═══ -->
+<div class="slide" id="s6">
+  <div class="inner">
+    <div style="position:relative">
+      <div class="svc-eyebrow anim anim-1">서비스 03 <span style="color:rgba(255,255,255,0.2)">|</span> 관세·통관 분야</div>
+      <div class="svc-num">03</div>
+      <div class="svc-label anim anim-1" style="color:#c4b5fd">관세사 ERP</div>
+      <div class="svc-title anim anim-2">통관 전 과정을<br>하나로 통합</div>
+      <p class="svc-desc anim anim-3">일반 면장과 중고자동차 면장 분리 관리.<br>거래처·청구서·월별 현황까지 완전 자동화.</p>
+      <ul class="svc-feats anim anim-4">
+        <li>일반 면장 + 중고자동차 면장 분리 관리</li>
+        <li>접수→처리→세관제출→통관완료 단계 추적</li>
+        <li>법인·개인·외국인 거래처 분류 관리</li>
+        <li>청구서 발급 및 입금 현황 관리</li>
+        <li>마이페이지에서 담당자와 메시지 주고받기</li>
+      </ul>
+    </div>
+    <div class="mock-screen anim anim-3">
+      <div class="mock-topbar-screen">
+        <div class="mdot" style="background:#ff5f57"></div>
+        <div class="mdot" style="background:#ffbd2e"></div>
+        <div class="mdot" style="background:#28c840"></div>
+        <span class="mock-label">🏛️ 믿음 관세사 · 면장 조회</span>
+      </div>
+      <div class="mock-sidebar-mini">
+        <div class="msb">
+          <div class="msb-head">일반 면장</div>
+          <div class="msb-item">면장 조회</div>
+          <div class="msb-item">면장 현황</div>
+          <div class="msb-head">중고차 면장</div>
+          <div class="msb-item on">면장 조회</div>
+          <div class="msb-item">면장 현황</div>
+          <div class="msb-head">거래처</div>
+          <div class="msb-item">거래처 관리(일반)</div>
+          <div class="msb-item">거래처 관리(중고차)</div>
+          <div class="msb-head">청구서</div>
+          <div class="msb-item">말소 청구 출력</div>
+          <div class="msb-item">면장 청구 현황</div>
+        </div>
+        <div class="mc">
+          <div class="mc-title">🚗 중고자동차 면장 조회 (5건)</div>
+          <div class="mc-kpi">
+            <div class="mc-kpi-card"><div class="mc-kpi-num" style="color:#7db3ff">5</div><div class="mc-kpi-label">전체</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-num" style="color:var(--gold)">1</div><div class="mc-kpi-label">접수</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-num" style="color:var(--mint)">4</div><div class="mc-kpi-label">세관제출</div></div>
+          </div>
+          <div class="mc-row mc-head" style="grid-template-columns:55px 1fr 50px 55px 55px">
+            <span>접수일</span><span>차대번호</span><span>수출</span><span>목적국</span><span>상태</span>
+          </div>
+          <div class="mc-row" style="grid-template-columns:55px 1fr 50px 55px 55px">
+            <span style="font-size:9px">02-24</span><span style="font-size:9px">KNAG241ABPA...<br><span style="color:rgba(255,255,255,0.3)">HANEX TRADE</span></span><span><span class="mb mb-roro">RORO</span></span><span style="font-size:9px">Aruba</span><span><span class="mb mb-customs">세관제출</span></span>
+          </div>
+          <div class="mc-row" style="grid-template-columns:55px 1fr 50px 55px 55px">
+            <span style="font-size:9px">02-24</span><span style="font-size:9px">W1NFD2DB1NA...<br><span style="color:rgba(255,255,255,0.3)">ZAMA AUTO</span></span><span><span class="mb mb-roro">RORO</span></span><span style="font-size:9px">Kyrgyzstan</span><span><span class="mb mb-new">접수</span></span>
+          </div>
+          <div class="mc-row" style="grid-template-columns:55px 1fr 50px 55px 55px">
+            <span style="font-size:9px">02-23</span><span style="font-size:9px">KNAMC81ABKS...<br><span style="color:rgba(255,255,255,0.3)">SARWAR</span></span><span><span class="mb mb-roro">RORO</span></span><span style="font-size:9px">Kyrgyzstan</span><span><span class="mb mb-customs">세관제출</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 7 — COMPARISON ═══ -->
+<div class="slide" id="s7">
+  <div class="inner">
+    <div class="slide-label anim anim-1">WHY LANDING LOAD</div>
+    <h2 class="anim anim-2">일반 제작사와<br>무엇이 다른가요?</h2>
+    <table class="cmp-table anim anim-3">
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th class="theirs">일반 홈페이지 제작사</th>
+          <th class="ours">Landing Load</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>제작 기간</td><td class="theirs">평균 2~3개월 이상</td><td class="ours">⚡ 3주 완성</td></tr>
+        <tr><td>제작 비용</td><td class="theirs">수백~수천만 원</td><td class="ours">💰 합리적인 정찰가</td></tr>
+        <tr><td>업종 이해도</td><td class="theirs">별도 기획·개발 필요</td><td class="ours">✅ 실운영 검증 구성</td></tr>
+        <tr><td>사전 확인</td><td class="theirs">완성 전 확인 불가</td><td class="ours">🔍 포트폴리오 사전 확인</td></tr>
+        <tr><td>유지관리</td><td class="theirs">추가 비용 발생</td><td class="ours">🔧 유지관리 플랜 포함</td></tr>
+        <tr><td>도메인·호스팅</td><td class="theirs">별도 계약 필요</td><td class="ours">🎁 1년 무료 제공</td></tr>
+        <tr><td>보안서버(SSL)</td><td class="theirs">업체마다 상이</td><td class="ours">🔒 기본 포함</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8 — PROCESS ═══ -->
+<div class="slide" id="s8">
+  <div class="inner">
+    <div class="slide-label anim anim-1">HOW IT WORKS</div>
+    <h2 class="anim anim-2">신청부터 오픈까지<br>5단계</h2>
+    <p class="sub anim anim-2">결제 후 24시간 이내 착수 보장 · 1~3주 완성</p>
+    <div class="steps-flow anim anim-3">
+      <div class="step-item">
+        <div class="step-circle gold">01</div>
+        <div class="step-name">무료 상담</div>
+        <div class="step-time">즉시</div>
+        <div class="step-desc">전화·온라인<br>1:1 담당자 상담</div>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">02</div>
+        <div class="step-name">시안 결정</div>
+        <div class="step-time">당일</div>
+        <div class="step-desc">포트폴리오에서<br>원하는 시안 선택</div>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">03</div>
+        <div class="step-name">신청·결제</div>
+        <div class="step-time">당일</div>
+        <div class="step-desc">신청서 작성<br>무통장·카드 결제</div>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">04</div>
+        <div class="step-name">제작 진행</div>
+        <div class="step-time">1~3주</div>
+        <div class="step-desc">매니저 배정<br>임시도메인 확인</div>
+      </div>
+      <div class="step-item">
+        <div class="step-circle gold">05</div>
+        <div class="step-name">🎉 오픈!</div>
+        <div class="step-time">완료</div>
+        <div class="step-desc">도메인 연결<br>유지관리 시작</div>
+      </div>
+    </div>
+    <div class="step-badges anim anim-4">
+      <span class="step-badge">⚡ 결제 후 24시간 이내 착수</span>
+      <span class="step-badge">📅 자료 접수일 기준 1~3주 완성</span>
+      <span class="step-badge">🔒 도메인·호스팅 1년 무료 포함</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9 — CTA ═══ -->
+<div class="slide" id="s9">
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <div class="content">
+    <div class="eyebrow anim anim-1">지금 바로 시작하세요</div>
+    <h2 class="anim anim-2">우리 업종에 맞는<br>홈페이지를<br><em>지금 확인하세요</em></h2>
+    <p class="sub anim anim-3">3주 완성 · 정찰가 · 업종 특화<br>무료 상담 후 포트폴리오로 사전 확인 가능합니다.</p>
+    <span class="phone anim anim-4">1668-1653</span>
+    <p class="phone-note anim anim-4">평일 09:00 ~ 18:00</p>
+    <button class="cta-btn anim anim-5">무료 상담 신청하기 →</button>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<script>
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  ring.style.left = e.clientX + 'px';
+  ring.style.top = e.clientY + 'px';
+});
+
+// ── SLIDES ──
+const TOTAL = 9;
+let cur = 1;
+function goTo(n) {
+  document.getElementById('s' + cur).classList.remove('active');
+  cur = n;
+  document.getElementById('s' + cur).classList.add('active');
+  document.getElementById('curNum').textContent = cur;
+  document.getElementById('progress').style.width = (cur / TOTAL * 100) + '%';
+}
+function nextSlide() { if (cur < TOTAL) goTo(cur + 1); }
+function prevSlide() { if (cur > 1) goTo(cur - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') nextSlide();
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+});
+
+// touch swipe
+let tx = 0;
+document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  const dx = tx - e.changedTouches[0].clientX;
+  if (Math.abs(dx) > 50) dx > 0 ? nextSlide() : prevSlide();
+});
+
+// init
+document.getElementById('progress').style.width = (1 / TOTAL * 100) + '%';
+</script>
+</body>
+</html>
